@@ -193,10 +193,10 @@
 
     .stage.triangle-start .formula-box {
       top: 16%;
-      width: min(96%, 760px);
-      height: min(48vw, 390px);
-      max-height: 40%;
-      min-height: 250px;
+      width: min(94%, 735px);
+      height: min(44vw, 360px);
+      max-height: 37%;
+      min-height: 235px;
       padding: 0;
       border-color: transparent;
       background: transparent;
@@ -268,8 +268,8 @@
 
     .stage.triangle-start .p-symbol {
       left: 50%;
-      top: 28%;
-      transform: translate(-50%, -50%) scale(1.42);
+      top: 33%;
+      transform: translate(-50%, -50%) scale(1.38);
       color: var(--green);
     }
 
@@ -280,10 +280,14 @@
 
     .stage.triangle-start .factor-group {
       left: 50%;
-      top: 70%;
-      width: 72%;
+      top: 72%;
+      width: 62%;
       transform: translate(-50%, -50%);
-      justify-content: space-around;
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      justify-items: center;
+      gap: 0;
       color: var(--soft-white);
     }
 
@@ -336,17 +340,17 @@
     }
 
     .cover-vl {
-      top: 62%;
-      left: 31%;
-      width: 16%;
-      height: 23%;
+      top: 61%;
+      left: 34%;
+      width: 15%;
+      height: 22%;
     }
 
     .cover-il {
-      top: 62%;
-      left: 53%;
-      width: 16%;
-      height: 23%;
+      top: 61%;
+      left: 51%;
+      width: 15%;
+      height: 22%;
     }
 
     .stage.cover-start .cover-vl { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.1s forwards; }
@@ -641,11 +645,11 @@
     @keyframes coverFade { to { opacity: 0; transform: scale(0.82) rotate(2deg); } }
 
     @keyframes handMove {
-      0% { opacity: 0; left: 20%; top: 65%; transform: rotate(-18deg) scale(0.82); }
-      8% { opacity: 1; left: 32%; top: 64%; transform: rotate(-10deg) scale(1); }
-      38% { opacity: 1; left: 35%; top: 64%; transform: rotate(-7deg) scale(1.04); }
-      48% { opacity: 0.72; left: 48%; top: 63%; transform: rotate(-14deg) scale(0.94); }
-      78% { opacity: 1; left: 55%; top: 64%; transform: rotate(-8deg) scale(1.04); }
+      0% { opacity: 0; left: 23%; top: 66%; transform: rotate(-18deg) scale(0.82); }
+      8% { opacity: 1; left: 35%; top: 64%; transform: rotate(-10deg) scale(1); }
+      38% { opacity: 1; left: 38%; top: 64%; transform: rotate(-7deg) scale(1.04); }
+      48% { opacity: 0.72; left: 50%; top: 63%; transform: rotate(-14deg) scale(0.94); }
+      78% { opacity: 1; left: 54%; top: 64%; transform: rotate(-8deg) scale(1.04); }
       100% { opacity: 0; left: 62%; top: 67%; transform: rotate(-18deg) scale(0.82); }
     }
 
@@ -679,7 +683,7 @@
       .hook { min-height: 21%; padding-block: 8px; }
       .board-note { top: 8px; }
       .formula-box { top: 49%; }
-      .stage.triangle-start .formula-box { top: 14%; min-height: 230px; height: 36%; }
+      .stage.triangle-start .formula-box { top: 14%; min-height: 220px; height: 34%; }
       .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
     }
@@ -721,13 +725,13 @@
               <span class="factor cos">cosθ</span>
             </span>
             <svg class="triangle-outline" viewBox="0 0 820 520" aria-hidden="true">
-              <line class="tri-line" x1="410" y1="34" x2="48" y2="468" />
-              <line class="tri-line" x1="410" y1="34" x2="772" y2="468" />
-              <line class="tri-line" x1="230" y1="250" x2="590" y2="250" />
-              <line class="tri-line" x1="48" y1="468" x2="772" y2="468" />
-              <line class="tri-line" x1="300" y1="250" x2="300" y2="468" />
-              <line class="tri-line" x1="410" y1="250" x2="410" y2="468" />
-              <line class="tri-line" x1="520" y1="250" x2="520" y2="468" />
+              <line class="tri-line" x1="410" y1="74" x2="72" y2="486" />
+              <line class="tri-line" x1="410" y1="74" x2="748" y2="486" />
+              <line class="tri-line" x1="256" y1="262" x2="564" y2="262" />
+              <line class="tri-line" x1="72" y1="486" x2="748" y2="486" />
+              <line class="tri-line" x1="288" y1="262" x2="288" y2="486" />
+              <line class="tri-line" x1="410" y1="262" x2="410" y2="486" />
+              <line class="tri-line" x1="532" y1="262" x2="532" y2="486" />
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
