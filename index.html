@@ -164,9 +164,10 @@
 
     .formula-box {
       position: absolute;
-      top: 18%;
+      top: 42%;
       left: 50%;
-      width: 91%;
+      width: 94%;
+      height: clamp(76px, 13vh, 150px);
       translate: -50% 0;
       padding: clamp(16px, 4.2vw, 38px) clamp(8px, 2.6vw, 24px);
       border: 2px solid rgba(66, 199, 140, 0.28);
@@ -176,13 +177,40 @@
       text-align: center;
       opacity: 0;
       transform: translateY(18px) scale(0.98);
+      transition:
+        top 1.35s cubic-bezier(.2,.9,.18,1),
+        width 1.35s cubic-bezier(.2,.9,.18,1),
+        height 1.35s cubic-bezier(.2,.9,.18,1),
+        padding 1.35s cubic-bezier(.2,.9,.18,1),
+        border-color 0.8s ease,
+        background 0.8s ease,
+        box-shadow 0.8s ease;
     }
 
     .stage.formula-start .formula-box {
-      animation: formulaBoxIn 0.72s ease 0.2s forwards, formulaToTriangle 1s cubic-bezier(.2,.9,.18,1) 4.15s forwards;
+      animation: formulaBoxIn 0.72s ease 0.2s forwards;
+    }
+
+    .stage.triangle-start .formula-box {
+      top: 14%;
+      width: min(86%, 620px);
+      height: min(52vw, 460px);
+      max-height: 48%;
+      min-height: 275px;
+      padding: 0;
+      border-color: transparent;
+      background: transparent;
+      box-shadow: none;
     }
 
     .formula {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(4px, 1vw, 12px);
       font-family: var(--marker);
       font-size: clamp(21px, 5vw, 56px);
       font-weight: 950;
@@ -193,7 +221,18 @@
       filter: saturate(1.1);
     }
 
-    .formula span { display: inline-block; }
+    .formula span {
+      display: inline-block;
+      transition:
+        opacity 0.75s ease,
+        transform 1.35s cubic-bezier(.2,.9,.18,1),
+        left 1.35s cubic-bezier(.2,.9,.18,1),
+        top 1.35s cubic-bezier(.2,.9,.18,1),
+        width 1.35s cubic-bezier(.2,.9,.18,1),
+        height 1.35s cubic-bezier(.2,.9,.18,1),
+        font-size 1.35s cubic-bezier(.2,.9,.18,1),
+        color 0.55s ease;
+    }
 
     .stage.formula-start .p-symbol {
       animation: popSpotlight 0.82s ease 1.05s 1;
@@ -203,29 +242,68 @@
       animation: popSpotlight 0.82s ease 2.28s 1;
     }
 
-    .formula-to-triangle-ghost {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
+    .factor-group {
+      display: inline-flex !important;
+      align-items: baseline;
+      gap: clamp(4px, 1vw, 12px);
+      transition:
+        opacity 0.75s ease,
+        transform 1.35s cubic-bezier(.2,.9,.18,1),
+        left 1.35s cubic-bezier(.2,.9,.18,1),
+        top 1.35s cubic-bezier(.2,.9,.18,1),
+        width 1.35s cubic-bezier(.2,.9,.18,1),
+        height 1.35s cubic-bezier(.2,.9,.18,1),
+        font-size 1.35s cubic-bezier(.2,.9,.18,1);
     }
 
-    .triangle-wrap {
+    .stage.triangle-start .formula {
+      display: block;
+      font-size: clamp(20px, 4.7vw, 50px);
+    }
+
+    .stage.triangle-start .formula span,
+    .stage.triangle-start .factor-group {
       position: absolute;
-      top: 21%;
+    }
+
+    .stage.triangle-start .p-symbol {
       left: 50%;
-      width: min(88%, 620px);
-      aspect-ratio: 1 / 0.86;
-      translate: -50% 0;
-      display: grid;
-      place-items: center;
-      filter: drop-shadow(0 0 21px rgba(66, 199, 140, 0.2));
-      opacity: 0;
-      transform: translateY(18px) scale(0.92);
+      top: 7%;
+      transform: translate(-50%, 0) scale(1.95);
+      color: var(--green);
     }
 
-    .stage.triangle-start .triangle-wrap {
-      animation: triangleIn 0.65s ease forwards, triangleSettle 0.8s ease 1.25s forwards;
+    .stage.triangle-start .equals {
+      opacity: 0;
+      transform: translate(-50%, -40px) scale(0.7);
+    }
+
+    .stage.triangle-start .factor-group {
+      left: 50%;
+      top: 67%;
+      width: 88%;
+      transform: translate(-50%, -50%);
+      justify-content: space-evenly;
+      color: var(--soft-white);
+    }
+
+    .formula > span,
+    .factor-group {
+      z-index: 2;
+    }
+
+    .stage.triangle-start .factor-group > span { position: static !important; }
+
+    .stage.triangle-start .mult {
+      position: static !important;
+      width: clamp(4px, 1.1vw, 10px);
+      height: clamp(48px, 10vw, 86px);
+      border-radius: 999px;
+      background: var(--line);
+      color: transparent;
+      text-shadow: none;
+      transform: rotate(0deg) scaleX(0.78);
+      box-shadow: 0 0 14px rgba(66,199,140,0.45);
     }
 
     .triangle-outline {
@@ -233,6 +311,9 @@
       inset: 0;
       width: 100%;
       height: 100%;
+      pointer-events: none;
+      overflow: visible;
+      z-index: 1;
     }
 
     .tri-line {
@@ -244,57 +325,9 @@
       filter: drop-shadow(0 0 15px rgba(66, 199, 140, 0.52));
     }
 
-    .stage.triangle-start .tri-line { animation: drawLine 1.12s cubic-bezier(.3,.75,.15,1) forwards; }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 0.15s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 0.3s; }
-
-    .triangle-symbol {
-      position: absolute;
-      font-family: var(--marker);
-      font-weight: 950;
-      letter-spacing: -0.045em;
-      text-align: center;
-    }
-
-    .tri-top {
-      top: 10%;
-      left: 0;
-      right: 0;
-      color: var(--green);
-      font-size: clamp(52px, 12.5vw, 126px);
-      text-shadow: var(--shadow);
-      opacity: 0;
-      transform: translateY(52px) scale(0.8);
-    }
-
-    .tri-bottom {
-      bottom: 13%;
-      left: 3%;
-      right: 3%;
-      color: var(--soft-white);
-      font-size: clamp(19px, 4.4vw, 46px);
-      line-height: 1.05;
-      text-shadow: 0 0 18px rgba(255,255,255,0.12);
-      opacity: 0;
-      transform: translateY(-46px) scale(0.92);
-    }
-
-    .stage.triangle-start .tri-top { animation: moveUp 0.92s cubic-bezier(.2,.9,.18,1) 0.12s forwards, markerJiggle 1.1s ease-in-out 1.05s; }
-    .stage.triangle-start .tri-bottom { animation: moveDown 0.92s cubic-bezier(.2,.9,.18,1) 0.12s forwards, markerJiggle 1.1s ease-in-out 1.05s; }
-
-    .scribble {
-      position: absolute;
-      inset: 19% 9% auto;
-      height: clamp(6px, 1.7vw, 13px);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.82);
-      opacity: 0;
-      transform: scaleX(0) rotate(-1.5deg);
-      transform-origin: left;
-      filter: blur(0.2px) drop-shadow(0 0 10px rgba(255,255,255,0.26));
-    }
-
-    .stage.triangle-start .scribble { animation: scribbleSwipe 0.62s ease 1.08s forwards; }
+    .stage.triangle-start .tri-line { animation: drawLine 1.15s cubic-bezier(.3,.75,.15,1) 0.25s forwards; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 0.42s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 0.85s; }
 
     .cover-block {
       position: absolute;
@@ -306,22 +339,22 @@
       transform: scale(0.7) rotate(-5deg);
     }
 
-    .cover-p {
-      top: 3%;
-      left: 37%;
-      width: 26%;
-      height: 27%;
+    .cover-vl {
+      top: 58%;
+      left: 34%;
+      width: 16%;
+      height: 23%;
     }
 
     .cover-il {
-      bottom: 5%;
-      right: 24%;
-      width: 18%;
-      height: 27%;
+      top: 58%;
+      left: 55%;
+      width: 16%;
+      height: 23%;
     }
 
-    .stage.cover-start .cover-p { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.08s forwards; }
-    .stage.cover-start .cover-il { animation: coverPop 0.48s ease 2.72s forwards; }
+    .stage.cover-start .cover-vl { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.1s forwards; }
+    .stage.cover-start .cover-il { animation: coverPop 0.48s ease 2.75s forwards, coverFade 0.35s ease 4.75s forwards; }
 
     .marker-tip {
       position: absolute;
@@ -335,11 +368,11 @@
       transform: rotate(-17deg);
     }
 
-    .stage.cover-start .marker-tip { animation: markerMove 4.95s ease 0.1s forwards; }
+    .stage.cover-start .marker-tip { animation: markerMove 5.35s ease 0.1s forwards; }
 
     .reveal-formula {
       position: absolute;
-      top: 61%;
+      top: 64%;
       left: 50%;
       width: 94%;
       min-height: 15%;
@@ -349,7 +382,7 @@
       text-align: center;
       font-family: var(--marker);
       font-weight: 950;
-      font-size: clamp(16px, 4vw, 42px);
+      font-size: clamp(16px, 3.75vw, 39px);
       line-height: 1.12;
       letter-spacing: -0.035em;
       text-shadow: var(--shadow);
@@ -362,8 +395,8 @@
       transform: translateY(14px) scale(0.96);
     }
 
-    .stage.cover-start .answer-one { animation: answerIn 0.5s ease 0.86s forwards, answerOut 0.34s ease 2.22s forwards; }
-    .stage.cover-start .answer-two { animation: answerIn 0.5s ease 3.32s forwards, pulseGlow 0.82s ease 4.02s 2; }
+    .stage.cover-start .answer-one { animation: answerIn 0.5s ease 0.86s forwards, answerOut 0.34s ease 2.26s forwards; }
+    .stage.cover-start .answer-two { animation: answerIn 0.5s ease 3.34s forwards, pulseGlow 0.82s ease 4.02s 2, answerOut 0.34s ease 5.1s forwards; }
 
     .examples {
       position: absolute;
@@ -398,26 +431,62 @@
     }
 
     .flash-card {
+      position: relative;
       min-width: 0;
-      display: grid;
-      place-items: center;
-      min-height: clamp(52px, 11vh, 118px);
+      min-height: clamp(84px, 15vh, 150px);
       padding: clamp(10px, 2.6vw, 23px) clamp(8px, 2vw, 18px);
       border: 2px solid rgba(66,199,140,0.34);
       border-radius: clamp(17px, 4vw, 30px);
       background: rgba(255,255,255,0.052);
       font-family: var(--marker);
-      font-size: clamp(18px, 4.2vw, 43px);
+      font-size: clamp(16px, 3.6vw, 37px);
       font-weight: 950;
       letter-spacing: -0.045em;
       line-height: 1.06;
       text-shadow: var(--shadow);
       opacity: 0;
       transform: translateY(22px) rotate(-1deg) scale(0.94);
+      overflow: hidden;
     }
 
-    .stage.examples-start .flash-card.one { animation: flashIn 0.42s ease 0.35s forwards; }
-    .stage.examples-start .flash-card.two { animation: flashIn 0.42s ease 0.78s forwards; }
+    .stage.examples-start .flash-card.one { animation: flashIn 0.42s ease 0.2s forwards; }
+    .stage.examples-start .flash-card.two { animation: flashIn 0.42s ease 1.25s forwards; }
+
+    .mini-triangle {
+      position: absolute;
+      inset: 8% 7%;
+      opacity: 0;
+    }
+
+    .flash-card span { position: absolute; transition: all 0.72s cubic-bezier(.2,.9,.18,1); }
+    .mini-eq { left: 31%; top: 39%; }
+    .mini-left { left: 12%; top: 39%; }
+    .mini-right { left: 43%; top: 39%; right: 6%; }
+    .mini-outline {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+    .mini-outline line {
+      stroke: var(--line);
+      stroke-width: 9;
+      stroke-linecap: round;
+      stroke-dasharray: 500;
+      stroke-dashoffset: 500;
+    }
+    .stage.examples-start .flash-card.one .mini-left { animation: miniTop 0.7s ease 0.95s forwards; }
+    .stage.examples-start .flash-card.one .mini-eq { animation: miniFade 0.45s ease 0.95s forwards; }
+    .stage.examples-start .flash-card.one .mini-right { animation: miniBottom 0.7s ease 0.95s forwards; }
+    .stage.examples-start .flash-card.one .mini-outline { animation: simpleOpacity 0.01s linear 1.22s forwards; }
+    .stage.examples-start .flash-card.one .mini-outline line { animation: drawLine 0.68s ease 1.22s forwards; }
+
+    .stage.examples-start .flash-card.two .mini-left { animation: miniTop 0.7s ease 1.95s forwards; }
+    .stage.examples-start .flash-card.two .mini-eq { animation: miniFade 0.45s ease 1.95s forwards; }
+    .stage.examples-start .flash-card.two .mini-right { animation: miniBottom 0.7s ease 1.95s forwards; }
+    .stage.examples-start .flash-card.two .mini-outline { animation: simpleOpacity 0.01s linear 2.22s forwards; }
+    .stage.examples-start .flash-card.two .mini-outline line { animation: drawLine 0.68s ease 2.22s forwards; }
 
     .closing-note {
       position: absolute;
@@ -566,12 +635,12 @@
     @keyframes coverFade { to { opacity: 0; transform: scale(0.82) rotate(2deg); } }
 
     @keyframes markerMove {
-      0% { opacity: 0; left: 19%; top: 20%; }
-      8% { opacity: 1; left: 43%; top: 18%; }
-      42% { opacity: 1; left: 54%; top: 18%; }
-      54% { opacity: 0.8; left: 76%; top: 68%; }
-      78% { opacity: 1; left: 62%; top: 69%; }
-      100% { opacity: 0; left: 68%; top: 72%; }
+      0% { opacity: 0; left: 22%; top: 63%; }
+      8% { opacity: 1; left: 36%; top: 65%; }
+      38% { opacity: 1; left: 42%; top: 65%; }
+      48% { opacity: 0.78; left: 52%; top: 64%; }
+      78% { opacity: 1; left: 60%; top: 65%; }
+      100% { opacity: 0; left: 66%; top: 68%; }
     }
 
     @keyframes answerIn { to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -585,17 +654,28 @@
 
     @keyframes flashIn { to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
 
+    @keyframes simpleOpacity { to { opacity: 1; } }
+
+    @keyframes miniTop {
+      to { left: 50%; top: 7%; transform: translateX(-50%) scale(1.35); color: var(--green); }
+    }
+
+    @keyframes miniBottom {
+      to { left: 50%; right: auto; top: 67%; transform: translate(-50%, -50%) scale(0.92); }
+    }
+
+    @keyframes miniFade { to { opacity: 0; transform: translateY(-14px) scale(0.7); } }
+
     @keyframes progress { to { width: 100%; } }
 
     @media (max-height: 720px) {
       .workspace { padding-top: 14px; gap: 7px; }
       .hook { min-height: 21%; padding-block: 8px; }
       .board-note { top: 8px; }
-      .formula-box { top: 16%; }
-      .triangle-wrap { top: 18%; width: min(78%, 520px); }
-      .stage.triangle-start .triangle-wrap { animation-name: triangleIn; }
-      .reveal-formula { top: 59%; }
-      .flash-card { min-height: 48px; }
+      .formula-box { top: 44%; }
+      .stage.triangle-start .formula-box { top: 13%; min-height: 220px; height: 43%; }
+      .reveal-formula { top: 62%; }
+      .flash-card { min-height: 82px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -625,36 +705,55 @@
           <div class="formula" id="formula">
             <span class="p-symbol">P</span>
             <span class="equals">=</span>
-            <span class="right-side">
-              <span>√3</span> <span>×</span> <span>V<sub>L</sub></span> <span>×</span> <span>I<sub>L</sub></span> <span>×</span> <span>cosθ</span>
+            <span class="factor-group right-side">
+              <span class="factor root">√3</span>
+              <span class="mult">×</span>
+              <span class="factor vl">V<sub>L</sub></span>
+              <span class="mult">×</span>
+              <span class="factor il">I<sub>L</sub></span>
+              <span class="mult">×</span>
+              <span class="factor cos">cosθ</span>
             </span>
+            <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
+              <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
+              <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
+              <line class="tri-line" x1="132" y1="396" x2="688" y2="396" />
+            </svg>
+            <div class="cover-block cover-vl" aria-hidden="true"></div>
+            <div class="cover-block cover-il" aria-hidden="true"></div>
+            <div class="marker-tip" aria-hidden="true"></div>
           </div>
         </div>
 
-        <div class="triangle-wrap" aria-label="Formula triangle with P over root three times V L times I L times cosine theta">
-          <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
-            <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
-            <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
-            <line class="tri-line" x1="132" y1="396" x2="688" y2="396" />
-          </svg>
-          <div class="scribble" aria-hidden="true"></div>
-          <div class="triangle-symbol tri-top">P</div>
-          <div class="triangle-symbol tri-bottom">√3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
-          <div class="cover-block cover-p" aria-hidden="true"></div>
-          <div class="cover-block cover-il" aria-hidden="true"></div>
-          <div class="marker-tip" aria-hidden="true"></div>
-        </div>
 
         <div class="reveal-formula" aria-live="polite">
-          <div class="answer answer-one">P = √3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
+          <div class="answer answer-one">V<sub>L</sub> = P / (√3 × I<sub>L</sub> × cosθ)</div>
           <div class="answer answer-two">I<sub>L</sub> = P / (√3 × V<sub>L</sub> × cosθ)</div>
         </div>
 
         <div class="examples" aria-label="Extra example formulas">
           <h2>Same trick, smaller formulas below.</h2>
           <div class="cards">
-            <div class="flash-card one">X<sub>L</sub> = 2πfL</div>
-            <div class="flash-card two">P = V × I × cosθ</div>
+            <div class="flash-card one">
+              <span class="mini-left">X<sub>L</sub></span>
+              <span class="mini-eq">=</span>
+              <span class="mini-right">2πfL</span>
+              <svg class="mini-outline" viewBox="0 0 420 260" aria-hidden="true">
+                <line x1="210" y1="24" x2="34" y2="232" />
+                <line x1="210" y1="24" x2="386" y2="232" />
+                <line x1="70" y1="145" x2="350" y2="145" />
+              </svg>
+            </div>
+            <div class="flash-card two">
+              <span class="mini-left">P</span>
+              <span class="mini-eq">=</span>
+              <span class="mini-right">V × I × cosθ</span>
+              <svg class="mini-outline" viewBox="0 0 420 260" aria-hidden="true">
+                <line x1="210" y1="24" x2="34" y2="232" />
+                <line x1="210" y1="24" x2="386" y2="232" />
+                <line x1="70" y1="145" x2="350" y2="145" />
+              </svg>
+            </div>
           </div>
         </div>
 
