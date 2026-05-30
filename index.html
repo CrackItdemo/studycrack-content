@@ -192,11 +192,11 @@
     }
 
     .stage.triangle-start .formula-box {
-      top: 22%;
-      width: min(90%, 660px);
-      height: min(50vw, 430px);
-      max-height: 43%;
-      min-height: 260px;
+      top: 20%;
+      width: min(96%, 760px);
+      height: min(58vw, 500px);
+      max-height: 48%;
+      min-height: 300px;
       padding: 0;
       border-color: transparent;
       background: transparent;
@@ -268,8 +268,8 @@
 
     .stage.triangle-start .p-symbol {
       left: 50%;
-      top: 6%;
-      transform: translate(-50%, 0) scale(1.9);
+      top: 17%;
+      transform: translate(-50%, 0) scale(1.5);
       color: var(--green);
     }
 
@@ -281,9 +281,9 @@
     .stage.triangle-start .factor-group {
       left: 50%;
       top: 72%;
-      width: 86%;
+      width: 68%;
       transform: translate(-50%, -50%);
-      justify-content: space-evenly;
+      justify-content: space-between;
       color: var(--soft-white);
     }
 
@@ -329,6 +329,7 @@
     .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 0.85s forwards; }
     .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.05s; }
     .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.6s; }
+    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.85s; }
 
     .cover-block {
       position: absolute;
@@ -684,7 +685,7 @@
       .hook { min-height: 21%; padding-block: 8px; }
       .board-note { top: 8px; }
       .formula-box { top: 49%; }
-      .stage.triangle-start .formula-box { top: 19%; min-height: 230px; height: 42%; }
+      .stage.triangle-start .formula-box { top: 18%; min-height: 260px; height: 46%; }
       .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
     }
@@ -726,9 +727,10 @@
               <span class="factor cos">cosθ</span>
             </span>
             <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
-              <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
-              <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
-              <line class="tri-line" x1="216" y1="396" x2="604" y2="396" />
+              <line class="tri-line" x1="410" y1="40" x2="24" y2="674" />
+              <line class="tri-line" x1="410" y1="40" x2="796" y2="674" />
+              <line class="tri-line" x1="200" y1="392" x2="620" y2="392" />
+              <line class="tri-line" x1="24" y1="674" x2="796" y2="674" />
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
