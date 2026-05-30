@@ -164,7 +164,7 @@
 
     .formula-box {
       position: absolute;
-      top: 42%;
+      top: 48%;
       left: 50%;
       width: 94%;
       height: clamp(76px, 13vh, 150px);
@@ -192,11 +192,11 @@
     }
 
     .stage.triangle-start .formula-box {
-      top: 14%;
-      width: min(86%, 620px);
-      height: min(52vw, 460px);
-      max-height: 48%;
-      min-height: 275px;
+      top: 22%;
+      width: min(90%, 660px);
+      height: min(50vw, 430px);
+      max-height: 43%;
+      min-height: 260px;
       padding: 0;
       border-color: transparent;
       background: transparent;
@@ -224,7 +224,7 @@
     .formula span {
       display: inline-block;
       transition:
-        opacity 0.75s ease,
+        opacity 1.35s ease,
         transform 1.35s cubic-bezier(.2,.9,.18,1),
         left 1.35s cubic-bezier(.2,.9,.18,1),
         top 1.35s cubic-bezier(.2,.9,.18,1),
@@ -247,7 +247,7 @@
       align-items: baseline;
       gap: clamp(4px, 1vw, 12px);
       transition:
-        opacity 0.75s ease,
+        opacity 1.35s ease,
         transform 1.35s cubic-bezier(.2,.9,.18,1),
         left 1.35s cubic-bezier(.2,.9,.18,1),
         top 1.35s cubic-bezier(.2,.9,.18,1),
@@ -268,8 +268,8 @@
 
     .stage.triangle-start .p-symbol {
       left: 50%;
-      top: 7%;
-      transform: translate(-50%, 0) scale(1.95);
+      top: 6%;
+      transform: translate(-50%, 0) scale(1.9);
       color: var(--green);
     }
 
@@ -280,8 +280,8 @@
 
     .stage.triangle-start .factor-group {
       left: 50%;
-      top: 67%;
-      width: 88%;
+      top: 72%;
+      width: 86%;
       transform: translate(-50%, -50%);
       justify-content: space-evenly;
       color: var(--soft-white);
@@ -303,6 +303,7 @@
       color: transparent;
       text-shadow: none;
       transform: rotate(0deg) scaleX(0.78);
+      transform-origin: center;
       box-shadow: 0 0 14px rgba(66,199,140,0.45);
     }
 
@@ -325,9 +326,9 @@
       filter: drop-shadow(0 0 15px rgba(66, 199, 140, 0.52));
     }
 
-    .stage.triangle-start .tri-line { animation: drawLine 1.15s cubic-bezier(.3,.75,.15,1) 0.25s forwards; }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 0.42s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 0.85s; }
+    .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 0.85s forwards; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.05s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.6s; }
 
     .cover-block {
       position: absolute;
@@ -340,15 +341,15 @@
     }
 
     .cover-vl {
-      top: 58%;
-      left: 34%;
+      top: 62%;
+      left: 31%;
       width: 16%;
       height: 23%;
     }
 
     .cover-il {
-      top: 58%;
-      left: 55%;
+      top: 62%;
+      left: 53%;
       width: 16%;
       height: 23%;
     }
@@ -356,23 +357,33 @@
     .stage.cover-start .cover-vl { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.1s forwards; }
     .stage.cover-start .cover-il { animation: coverPop 0.48s ease 2.75s forwards, coverFade 0.35s ease 4.75s forwards; }
 
-    .marker-tip {
+    .hand-pointer {
       position: absolute;
       z-index: 6;
-      width: clamp(48px, 12vw, 86px);
-      height: clamp(14px, 3.4vw, 24px);
-      border-radius: 999px 8px 8px 999px;
-      background: linear-gradient(90deg, #f8fbfa 0 68%, var(--green) 68% 100%);
-      box-shadow: 0 10px 23px rgba(0,0,0,0.28);
+      width: clamp(44px, 11vw, 78px);
+      height: clamp(44px, 11vw, 78px);
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.94);
+      box-shadow: 0 10px 23px rgba(0,0,0,0.28), 0 0 18px rgba(255,255,255,0.16);
+      color: #071C2C;
       opacity: 0;
-      transform: rotate(-17deg);
+      transform: rotate(-12deg) scale(0.86);
     }
 
-    .stage.cover-start .marker-tip { animation: markerMove 5.35s ease 0.1s forwards; }
+    .hand-pointer::before {
+      content: "☝";
+      line-height: 1;
+      font-size: clamp(29px, 7vw, 52px);
+      transform: translateY(-3%) rotate(-13deg);
+    }
+
+    .stage.cover-start .hand-pointer { animation: handMove 5.35s ease 0.1s forwards; }
 
     .reveal-formula {
       position: absolute;
-      top: 64%;
+      top: 69%;
       left: 50%;
       width: 94%;
       min-height: 15%;
@@ -401,7 +412,7 @@
     .examples {
       position: absolute;
       left: 50%;
-      bottom: clamp(12px, 3vw, 30px);
+      bottom: clamp(10px, 2.4vw, 24px);
       width: 92%;
       translate: -50% 0;
       display: grid;
@@ -433,7 +444,7 @@
     .flash-card {
       position: relative;
       min-width: 0;
-      min-height: clamp(84px, 15vh, 150px);
+      min-height: clamp(82px, 14vh, 142px);
       padding: clamp(10px, 2.6vw, 23px) clamp(8px, 2vw, 18px);
       border: 2px solid rgba(66,199,140,0.34);
       border-radius: clamp(17px, 4vw, 30px);
@@ -450,7 +461,7 @@
     }
 
     .stage.examples-start .flash-card.one { animation: flashIn 0.42s ease 0.2s forwards; }
-    .stage.examples-start .flash-card.two { animation: flashIn 0.42s ease 1.25s forwards; }
+    .stage.examples-start .flash-card.two { animation: flashIn 0.42s ease 2.05s forwards; }
 
     .mini-triangle {
       position: absolute;
@@ -482,11 +493,11 @@
     .stage.examples-start .flash-card.one .mini-outline { animation: simpleOpacity 0.01s linear 1.22s forwards; }
     .stage.examples-start .flash-card.one .mini-outline line { animation: drawLine 0.68s ease 1.22s forwards; }
 
-    .stage.examples-start .flash-card.two .mini-left { animation: miniTop 0.7s ease 1.95s forwards; }
-    .stage.examples-start .flash-card.two .mini-eq { animation: miniFade 0.45s ease 1.95s forwards; }
-    .stage.examples-start .flash-card.two .mini-right { animation: miniBottom 0.7s ease 1.95s forwards; }
-    .stage.examples-start .flash-card.two .mini-outline { animation: simpleOpacity 0.01s linear 2.22s forwards; }
-    .stage.examples-start .flash-card.two .mini-outline line { animation: drawLine 0.68s ease 2.22s forwards; }
+    .stage.examples-start .flash-card.two .mini-left { animation: miniTop 0.7s ease 2.8s forwards; }
+    .stage.examples-start .flash-card.two .mini-eq { animation: miniFade 0.45s ease 2.8s forwards; }
+    .stage.examples-start .flash-card.two .mini-right { animation: miniBottom 0.7s ease 2.8s forwards; }
+    .stage.examples-start .flash-card.two .mini-outline { animation: simpleOpacity 0.01s linear 3.08s forwards; }
+    .stage.examples-start .flash-card.two .mini-outline line { animation: drawLine 0.68s ease 3.08s forwards; }
 
     .closing-note {
       position: absolute;
@@ -634,13 +645,13 @@
 
     @keyframes coverFade { to { opacity: 0; transform: scale(0.82) rotate(2deg); } }
 
-    @keyframes markerMove {
-      0% { opacity: 0; left: 22%; top: 63%; }
-      8% { opacity: 1; left: 36%; top: 65%; }
-      38% { opacity: 1; left: 42%; top: 65%; }
-      48% { opacity: 0.78; left: 52%; top: 64%; }
-      78% { opacity: 1; left: 60%; top: 65%; }
-      100% { opacity: 0; left: 66%; top: 68%; }
+    @keyframes handMove {
+      0% { opacity: 0; left: 20%; top: 65%; transform: rotate(-18deg) scale(0.82); }
+      8% { opacity: 1; left: 32%; top: 64%; transform: rotate(-10deg) scale(1); }
+      38% { opacity: 1; left: 35%; top: 64%; transform: rotate(-7deg) scale(1.04); }
+      48% { opacity: 0.72; left: 48%; top: 63%; transform: rotate(-14deg) scale(0.94); }
+      78% { opacity: 1; left: 55%; top: 64%; transform: rotate(-8deg) scale(1.04); }
+      100% { opacity: 0; left: 62%; top: 67%; transform: rotate(-18deg) scale(0.82); }
     }
 
     @keyframes answerIn { to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -672,9 +683,9 @@
       .workspace { padding-top: 14px; gap: 7px; }
       .hook { min-height: 21%; padding-block: 8px; }
       .board-note { top: 8px; }
-      .formula-box { top: 44%; }
-      .stage.triangle-start .formula-box { top: 13%; min-height: 220px; height: 43%; }
-      .reveal-formula { top: 62%; }
+      .formula-box { top: 49%; }
+      .stage.triangle-start .formula-box { top: 19%; min-height: 230px; height: 42%; }
+      .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
     }
 
@@ -717,11 +728,11 @@
             <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
               <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
               <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
-              <line class="tri-line" x1="132" y1="396" x2="688" y2="396" />
+              <line class="tri-line" x1="216" y1="396" x2="604" y2="396" />
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
-            <div class="marker-tip" aria-hidden="true"></div>
+            <div class="hand-pointer" aria-hidden="true"></div>
           </div>
         </div>
 
@@ -741,7 +752,7 @@
               <svg class="mini-outline" viewBox="0 0 420 260" aria-hidden="true">
                 <line x1="210" y1="24" x2="34" y2="232" />
                 <line x1="210" y1="24" x2="386" y2="232" />
-                <line x1="70" y1="145" x2="350" y2="145" />
+                <line x1="108" y1="145" x2="312" y2="145" />
               </svg>
             </div>
             <div class="flash-card two">
@@ -751,7 +762,7 @@
               <svg class="mini-outline" viewBox="0 0 420 260" aria-hidden="true">
                 <line x1="210" y1="24" x2="34" y2="232" />
                 <line x1="210" y1="24" x2="386" y2="232" />
-                <line x1="70" y1="145" x2="350" y2="145" />
+                <line x1="108" y1="145" x2="312" y2="145" />
               </svg>
             </div>
           </div>
