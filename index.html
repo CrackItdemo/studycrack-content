@@ -192,11 +192,11 @@
     }
 
     .stage.triangle-start .formula-box {
-      top: 20%;
+      top: 16%;
       width: min(96%, 760px);
-      height: min(58vw, 500px);
-      max-height: 48%;
-      min-height: 300px;
+      height: min(48vw, 390px);
+      max-height: 40%;
+      min-height: 250px;
       padding: 0;
       border-color: transparent;
       background: transparent;
@@ -268,8 +268,8 @@
 
     .stage.triangle-start .p-symbol {
       left: 50%;
-      top: 17%;
-      transform: translate(-50%, 0) scale(1.5);
+      top: 28%;
+      transform: translate(-50%, -50%) scale(1.42);
       color: var(--green);
     }
 
@@ -280,10 +280,10 @@
 
     .stage.triangle-start .factor-group {
       left: 50%;
-      top: 72%;
-      width: 68%;
+      top: 70%;
+      width: 72%;
       transform: translate(-50%, -50%);
-      justify-content: space-between;
+      justify-content: space-around;
       color: var(--soft-white);
     }
 
@@ -295,16 +295,7 @@
     .stage.triangle-start .factor-group > span { position: static !important; }
 
     .stage.triangle-start .mult {
-      position: static !important;
-      width: clamp(4px, 1.1vw, 10px);
-      height: clamp(48px, 10vw, 86px);
-      border-radius: 999px;
-      background: var(--line);
-      color: transparent;
-      text-shadow: none;
-      transform: rotate(0deg) scaleX(0.78);
-      transform-origin: center;
-      box-shadow: 0 0 14px rgba(66,199,140,0.45);
+      display: none !important;
     }
 
     .triangle-outline {
@@ -330,6 +321,9 @@
     .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.05s; }
     .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.6s; }
     .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.85s; }
+    .stage.triangle-start .tri-line:nth-child(5),
+    .stage.triangle-start .tri-line:nth-child(6),
+    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 2.05s; }
 
     .cover-block {
       position: absolute;
@@ -685,7 +679,7 @@
       .hook { min-height: 21%; padding-block: 8px; }
       .board-note { top: 8px; }
       .formula-box { top: 49%; }
-      .stage.triangle-start .formula-box { top: 18%; min-height: 260px; height: 46%; }
+      .stage.triangle-start .formula-box { top: 14%; min-height: 230px; height: 36%; }
       .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
     }
@@ -726,11 +720,14 @@
               <span class="mult">×</span>
               <span class="factor cos">cosθ</span>
             </span>
-            <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
-              <line class="tri-line" x1="410" y1="40" x2="24" y2="674" />
-              <line class="tri-line" x1="410" y1="40" x2="796" y2="674" />
-              <line class="tri-line" x1="200" y1="392" x2="620" y2="392" />
-              <line class="tri-line" x1="24" y1="674" x2="796" y2="674" />
+            <svg class="triangle-outline" viewBox="0 0 820 520" aria-hidden="true">
+              <line class="tri-line" x1="410" y1="34" x2="48" y2="468" />
+              <line class="tri-line" x1="410" y1="34" x2="772" y2="468" />
+              <line class="tri-line" x1="230" y1="250" x2="590" y2="250" />
+              <line class="tri-line" x1="48" y1="468" x2="772" y2="468" />
+              <line class="tri-line" x1="300" y1="250" x2="300" y2="468" />
+              <line class="tri-line" x1="410" y1="250" x2="410" y2="468" />
+              <line class="tri-line" x1="520" y1="250" x2="520" y2="468" />
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
