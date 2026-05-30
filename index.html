@@ -9,15 +9,15 @@
       --green: #42C78C;
       --navy: #071C2C;
       --white: #ffffff;
-      --muted: rgba(255, 255, 255, 0.72);
+      --soft-white: rgba(255, 255, 255, 0.86);
+      --muted: rgba(255, 255, 255, 0.64);
+      --panel: rgba(255, 255, 255, 0.055);
       --line: rgba(66, 199, 140, 0.94);
-      --shadow: 0 0 28px rgba(66, 199, 140, 0.48), 0 0 60px rgba(66, 199, 140, 0.22);
+      --shadow: 0 0 22px rgba(66, 199, 140, 0.42), 0 0 48px rgba(66, 199, 140, 0.18);
       --marker: "Arial Rounded MT Bold", "Trebuchet MS", Arial, sans-serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html,
     body {
@@ -44,9 +44,9 @@
       overflow: hidden;
       isolation: isolate;
       background:
-        radial-gradient(circle at 22% 12%, rgba(66, 199, 140, 0.2), transparent 24%),
-        radial-gradient(circle at 80% 78%, rgba(66, 199, 140, 0.16), transparent 28%),
-        linear-gradient(160deg, #09243a 0%, var(--navy) 42%, #04121f 100%);
+        radial-gradient(circle at 18% 10%, rgba(66, 199, 140, 0.2), transparent 23%),
+        radial-gradient(circle at 84% 76%, rgba(66, 199, 140, 0.16), transparent 27%),
+        linear-gradient(160deg, #09243a 0%, var(--navy) 43%, #04121f 100%);
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       aspect-ratio: 9 / 16;
     }
@@ -60,7 +60,7 @@
       background-image:
         linear-gradient(rgba(255,255,255,0.12) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-      background-size: 54px 54px;
+      background-size: clamp(30px, 8vw, 54px) clamp(30px, 8vw, 54px);
       transform: rotate(-1deg) scale(1.08);
     }
 
@@ -69,122 +69,163 @@
       position: absolute;
       inset: -14%;
       z-index: -1;
-      background: radial-gradient(circle, transparent 42%, rgba(0, 0, 0, 0.48) 78%);
+      background: radial-gradient(circle, transparent 42%, rgba(0, 0, 0, 0.5) 78%);
       pointer-events: none;
     }
 
-    .scene {
+    .workspace {
       position: absolute;
       inset: 0;
       display: grid;
-      place-items: center;
-      padding: 9.4% 7.2%;
-      opacity: 0;
-      transform: translateY(26px) scale(0.985);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(8px, 2vh, 24px);
+      padding: clamp(18px, 5.4vw, 58px) clamp(16px, 5.2vw, 56px) clamp(28px, 7vw, 70px);
     }
 
-    .scene.active {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      z-index: 2;
+    .hook {
+      position: relative;
+      z-index: 8;
+      display: grid;
+      gap: clamp(7px, 1.3vh, 16px);
+      align-content: start;
+      min-height: 23%;
+      padding: clamp(10px, 2.4vw, 24px) clamp(10px, 2.8vw, 26px);
+      border: 1px solid rgba(66, 199, 140, 0.18);
+      border-radius: clamp(18px, 4vw, 34px);
+      background: linear-gradient(180deg, rgba(7, 28, 44, 0.74), rgba(7, 28, 44, 0.34));
+      box-shadow: 0 18px 44px rgba(0,0,0,0.18), inset 0 0 28px rgba(66,199,140,0.045);
+      backdrop-filter: blur(5px);
     }
 
     .kicker {
-      margin-bottom: 26px;
       color: var(--green);
-      font-size: clamp(18px, 3.2vw, 34px);
-      font-weight: 900;
-      letter-spacing: 0.18em;
+      font-size: clamp(11px, 2.25vw, 22px);
+      font-weight: 950;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      text-shadow: 0 0 18px rgba(66, 199, 140, 0.5);
-    }
-
-    .hook-stack {
-      width: 100%;
-      text-align: left;
+      text-shadow: 0 0 15px rgba(66, 199, 140, 0.5);
+      opacity: 0;
+      transform: translateY(-8px);
+      animation: fadeWrite 0.55s ease forwards;
     }
 
     .hook-line {
-      display: block;
-      margin: 0 0 28px;
-      font-size: clamp(43px, 8vw, 94px);
+      margin: 0;
+      font-size: clamp(21px, 5.5vw, 54px);
       font-weight: 950;
-      line-height: 0.98;
-      letter-spacing: -0.055em;
+      line-height: 1.04;
+      letter-spacing: -0.05em;
       text-wrap: balance;
-      text-shadow: 0 0 24px rgba(66, 199, 140, 0.24);
+      text-shadow: 0 0 20px rgba(66, 199, 140, 0.2);
       opacity: 0;
-      transform: translateX(-26px) rotate(-0.8deg);
-      animation: writeIn 0.75s cubic-bezier(.2,.9,.2,1) forwards;
+      transform: translateX(-18px) rotate(-0.5deg);
+      animation: fadeWrite 0.72s cubic-bezier(.2,.9,.2,1) forwards;
     }
 
-    .hook-line:nth-of-type(3) { animation-delay: 1.65s; }
-    .hook-line:nth-of-type(4) { animation-delay: 3.15s; }
+    .hook-line:nth-of-type(2) { animation-delay: 0.35s; }
+    .hook-line:nth-of-type(3) { animation-delay: 1.35s; }
+    .hook-line:nth-of-type(4) { animation-delay: 2.45s; }
 
     .green {
       color: var(--green);
       text-shadow: var(--shadow);
     }
 
-    .formula-scene {
-      align-content: center;
-      gap: 38px;
-      text-align: center;
+    .board {
+      position: relative;
+      min-height: 0;
+      border: 2px solid rgba(66, 199, 140, 0.18);
+      border-radius: clamp(22px, 5vw, 46px);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.052), rgba(255,255,255,0.026)),
+        rgba(7, 28, 44, 0.38);
+      box-shadow: 0 24px 58px rgba(0,0,0,0.18), inset 0 0 44px rgba(66,199,140,0.045);
+      overflow: hidden;
     }
 
-    .formula-title {
-      max-width: 86%;
-      font-size: clamp(23px, 4vw, 44px);
+    .board-note {
+      position: absolute;
+      top: clamp(12px, 2.7vw, 28px);
+      left: 50%;
+      width: 92%;
+      translate: -50% 0;
+      text-align: center;
       color: var(--muted);
+      font-size: clamp(13px, 3vw, 29px);
       font-weight: 800;
       line-height: 1.18;
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    .stage.formula-start .board-note {
+      animation: simpleIn 0.55s ease forwards, softOut 0.45s ease 4.8s forwards;
     }
 
     .formula-box {
-      width: 100%;
-      padding: 42px 20px;
-      border: 3px solid rgba(66, 199, 140, 0.28);
-      border-radius: 34px;
-      background: rgba(255, 255, 255, 0.035);
-      box-shadow: 0 0 44px rgba(66, 199, 140, 0.12), inset 0 0 34px rgba(66, 199, 140, 0.06);
+      position: absolute;
+      top: 18%;
+      left: 50%;
+      width: 91%;
+      translate: -50% 0;
+      padding: clamp(16px, 4.2vw, 38px) clamp(8px, 2.6vw, 24px);
+      border: 2px solid rgba(66, 199, 140, 0.28);
+      border-radius: clamp(20px, 5vw, 40px);
+      background: rgba(255, 255, 255, 0.038);
+      box-shadow: 0 0 36px rgba(66, 199, 140, 0.1), inset 0 0 28px rgba(66, 199, 140, 0.055);
+      text-align: center;
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+    }
+
+    .stage.formula-start .formula-box {
+      animation: formulaBoxIn 0.72s ease 0.2s forwards, formulaToTriangle 1s cubic-bezier(.2,.9,.18,1) 4.15s forwards;
     }
 
     .formula {
       font-family: var(--marker);
-      font-size: clamp(40px, 7.2vw, 86px);
+      font-size: clamp(21px, 5vw, 56px);
       font-weight: 950;
       line-height: 1.12;
-      letter-spacing: -0.035em;
+      letter-spacing: -0.045em;
       text-shadow: var(--shadow);
       white-space: nowrap;
       filter: saturate(1.1);
     }
 
-    .formula span {
-      display: inline-block;
-      transition: color 0.35s ease, transform 0.35s ease, text-shadow 0.35s ease;
+    .formula span { display: inline-block; }
+
+    .stage.formula-start .p-symbol {
+      animation: popSpotlight 0.82s ease 1.05s 1;
     }
 
-    .formula .dim {
-      color: rgba(255, 255, 255, 0.58);
-      text-shadow: none;
+    .stage.formula-start .right-side {
+      animation: popSpotlight 0.82s ease 2.28s 1;
     }
 
-    .formula .spotlight,
-    .formula .right-side.spotlight span {
-      color: var(--green);
-      transform: translateY(-4px) scale(1.04);
-      text-shadow: var(--shadow);
+    .formula-to-triangle-ghost {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
     }
 
     .triangle-wrap {
-      position: relative;
-      width: min(88%, 820px);
-      aspect-ratio: 1 / 0.88;
+      position: absolute;
+      top: 21%;
+      left: 50%;
+      width: min(88%, 620px);
+      aspect-ratio: 1 / 0.86;
+      translate: -50% 0;
       display: grid;
       place-items: center;
-      filter: drop-shadow(0 0 24px rgba(66, 199, 140, 0.2));
+      filter: drop-shadow(0 0 21px rgba(66, 199, 140, 0.2));
+      opacity: 0;
+      transform: translateY(18px) scale(0.92);
+    }
+
+    .stage.triangle-start .triangle-wrap {
+      animation: triangleIn 0.65s ease forwards, triangleSettle 0.8s ease 1.25s forwards;
     }
 
     .triangle-outline {
@@ -196,123 +237,71 @@
 
     .tri-line {
       stroke: var(--line);
-      stroke-width: 9;
+      stroke-width: 8;
       stroke-linecap: round;
       stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
-      filter: drop-shadow(0 0 16px rgba(66, 199, 140, 0.55));
+      filter: drop-shadow(0 0 15px rgba(66, 199, 140, 0.52));
     }
 
-    .active .tri-line {
-      animation: drawLine 1.15s cubic-bezier(.3,.75,.15,1) forwards;
-    }
-
-    .active .tri-line:nth-child(2) { animation-delay: 0.18s; }
-    .active .tri-line:nth-child(3) { animation-delay: 0.34s; }
+    .stage.triangle-start .tri-line { animation: drawLine 1.12s cubic-bezier(.3,.75,.15,1) forwards; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 0.15s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 0.3s; }
 
     .triangle-symbol {
       position: absolute;
       font-family: var(--marker);
       font-weight: 950;
-      letter-spacing: -0.04em;
+      letter-spacing: -0.045em;
       text-align: center;
     }
 
     .tri-top {
-      top: 11%;
+      top: 10%;
       left: 0;
       right: 0;
       color: var(--green);
-      font-size: clamp(78px, 15vw, 170px);
+      font-size: clamp(52px, 12.5vw, 126px);
       text-shadow: var(--shadow);
       opacity: 0;
-      transform: translateY(86px) scale(0.8);
+      transform: translateY(52px) scale(0.8);
     }
 
     .tri-bottom {
       bottom: 13%;
       left: 3%;
       right: 3%;
-      font-size: clamp(30px, 5.8vw, 68px);
+      color: var(--soft-white);
+      font-size: clamp(19px, 4.4vw, 46px);
       line-height: 1.05;
-      text-shadow: 0 0 20px rgba(255,255,255,0.12);
+      text-shadow: 0 0 18px rgba(255,255,255,0.12);
       opacity: 0;
-      transform: translateY(-74px) scale(0.92);
+      transform: translateY(-46px) scale(0.92);
     }
 
-    .active .tri-top {
-      animation: moveUp 1.12s cubic-bezier(.2,.9,.18,1) 0.08s forwards, markerJiggle 1.4s ease-in-out 1.05s;
-    }
-
-    .active .tri-bottom {
-      animation: moveDown 1.12s cubic-bezier(.2,.9,.18,1) 0.08s forwards, markerJiggle 1.4s ease-in-out 1.05s;
-    }
+    .stage.triangle-start .tri-top { animation: moveUp 0.92s cubic-bezier(.2,.9,.18,1) 0.12s forwards, markerJiggle 1.1s ease-in-out 1.05s; }
+    .stage.triangle-start .tri-bottom { animation: moveDown 0.92s cubic-bezier(.2,.9,.18,1) 0.12s forwards, markerJiggle 1.1s ease-in-out 1.05s; }
 
     .scribble {
       position: absolute;
-      inset: 19% 8% auto;
-      height: 13px;
+      inset: 19% 9% auto;
+      height: clamp(6px, 1.7vw, 13px);
       border-radius: 999px;
       background: rgba(255,255,255,0.82);
       opacity: 0;
       transform: scaleX(0) rotate(-1.5deg);
       transform-origin: left;
-      filter: blur(0.2px) drop-shadow(0 0 10px rgba(255,255,255,0.28));
+      filter: blur(0.2px) drop-shadow(0 0 10px rgba(255,255,255,0.26));
     }
 
-    .active .scribble {
-      animation: scribbleSwipe 0.62s ease 1.05s forwards;
-    }
-
-    .cover-scene {
-      align-content: center;
-      gap: 44px;
-      text-align: center;
-    }
-
-    .mini-triangle {
-      position: relative;
-      width: min(77%, 660px);
-      aspect-ratio: 1 / 0.84;
-      margin: 0 auto;
-      font-family: var(--marker);
-      font-weight: 950;
-    }
-
-    .mini-triangle .top,
-    .mini-triangle .bottom {
-      position: absolute;
-      left: 0;
-      right: 0;
-      text-align: center;
-      text-shadow: var(--shadow);
-    }
-
-    .mini-triangle .top {
-      top: 8%;
-      color: var(--green);
-      font-size: clamp(74px, 14vw, 144px);
-    }
-
-    .mini-triangle .bottom {
-      bottom: 12%;
-      font-size: clamp(26px, 5vw, 54px);
-      line-height: 1.05;
-    }
-
-    .mini-triangle svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
+    .stage.triangle-start .scribble { animation: scribbleSwipe 0.62s ease 1.08s forwards; }
 
     .cover-block {
       position: absolute;
-      z-index: 3;
-      border-radius: 26px;
-      background: repeating-linear-gradient(-8deg, rgba(255,255,255,0.96), rgba(255,255,255,0.96) 12px, rgba(228,244,238,0.98) 12px, rgba(228,244,238,0.98) 22px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.28), 0 0 24px rgba(255,255,255,0.16);
+      z-index: 5;
+      border-radius: clamp(13px, 3vw, 24px);
+      background: repeating-linear-gradient(-8deg, rgba(255,255,255,0.96), rgba(255,255,255,0.96) 10px, rgba(228,244,238,0.98) 10px, rgba(228,244,238,0.98) 18px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.27), 0 0 20px rgba(255,255,255,0.14);
       opacity: 0;
       transform: scale(0.7) rotate(-5deg);
     }
@@ -322,152 +311,133 @@
       left: 37%;
       width: 26%;
       height: 27%;
-      animation: coverPop 0.55s ease 0.3s forwards, coverFade 0.35s ease 2.45s forwards;
     }
 
     .cover-il {
       bottom: 5%;
-      right: 23%;
+      right: 24%;
       width: 18%;
-      height: 26%;
-      animation: coverPop 0.55s ease 3.15s forwards;
+      height: 27%;
     }
+
+    .stage.cover-start .cover-p { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.08s forwards; }
+    .stage.cover-start .cover-il { animation: coverPop 0.48s ease 2.72s forwards; }
 
     .marker-tip {
       position: absolute;
-      z-index: 4;
-      width: 90px;
-      height: 26px;
+      z-index: 6;
+      width: clamp(48px, 12vw, 86px);
+      height: clamp(14px, 3.4vw, 24px);
       border-radius: 999px 8px 8px 999px;
       background: linear-gradient(90deg, #f8fbfa 0 68%, var(--green) 68% 100%);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.28);
+      box-shadow: 0 10px 23px rgba(0,0,0,0.28);
       opacity: 0;
       transform: rotate(-17deg);
-      animation: markerMove 5.3s ease 0.15s forwards;
     }
 
+    .stage.cover-start .marker-tip { animation: markerMove 4.95s ease 0.1s forwards; }
+
     .reveal-formula {
-      min-height: 162px;
+      position: absolute;
+      top: 61%;
+      left: 50%;
+      width: 94%;
+      min-height: 15%;
+      translate: -50% 0;
       display: grid;
       place-items: center;
+      text-align: center;
       font-family: var(--marker);
       font-weight: 950;
-      font-size: clamp(32px, 6vw, 72px);
-      line-height: 1.08;
+      font-size: clamp(16px, 4vw, 42px);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
       text-shadow: var(--shadow);
     }
 
     .answer {
       position: absolute;
+      max-width: 100%;
       opacity: 0;
-      transform: translateY(18px) scale(0.96);
+      transform: translateY(14px) scale(0.96);
     }
 
-    .active .answer-one {
-      animation: answerIn 0.55s ease 0.95s forwards, answerOut 0.35s ease 2.62s forwards;
-    }
-
-    .active .answer-two {
-      max-width: 96%;
-      animation: answerIn 0.55s ease 3.78s forwards, pulseGlow 0.82s ease 4.5s 2;
-    }
+    .stage.cover-start .answer-one { animation: answerIn 0.5s ease 0.86s forwards, answerOut 0.34s ease 2.22s forwards; }
+    .stage.cover-start .answer-two { animation: answerIn 0.5s ease 3.32s forwards, pulseGlow 0.82s ease 4.02s 2; }
 
     .examples {
-      width: 100%;
-      text-align: center;
+      position: absolute;
+      left: 50%;
+      bottom: clamp(12px, 3vw, 30px);
+      width: 92%;
+      translate: -50% 0;
       display: grid;
+      gap: clamp(8px, 1.4vh, 18px);
       place-items: center;
-      gap: 42px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
     }
 
-    .examples h2,
-    .ending h2 {
+    .stage.examples-start .examples { animation: simpleIn 0.55s ease forwards; }
+
+    .examples h2 {
       margin: 0;
-      font-size: clamp(46px, 8.2vw, 100px);
-      line-height: 0.98;
-      letter-spacing: -0.055em;
-      text-wrap: balance;
-      text-shadow: 0 0 20px rgba(66, 199, 140, 0.2);
+      color: var(--muted);
+      font-size: clamp(15px, 3.4vw, 33px);
+      line-height: 1.1;
+      font-weight: 900;
+      letter-spacing: -0.035em;
+    }
+
+    .cards {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(8px, 2vw, 18px);
     }
 
     .flash-card {
-      width: 92%;
-      min-height: 178px;
+      min-width: 0;
       display: grid;
       place-items: center;
-      padding: 28px 18px;
-      border: 3px solid rgba(66,199,140,0.36);
-      border-radius: 32px;
-      background: rgba(255,255,255,0.055);
+      min-height: clamp(52px, 11vh, 118px);
+      padding: clamp(10px, 2.6vw, 23px) clamp(8px, 2vw, 18px);
+      border: 2px solid rgba(66,199,140,0.34);
+      border-radius: clamp(17px, 4vw, 30px);
+      background: rgba(255,255,255,0.052);
       font-family: var(--marker);
-      font-size: clamp(48px, 8vw, 92px);
+      font-size: clamp(18px, 4.2vw, 43px);
       font-weight: 950;
       letter-spacing: -0.045em;
+      line-height: 1.06;
       text-shadow: var(--shadow);
       opacity: 0;
-      transform: translateY(36px) rotate(-1deg) scale(0.94);
+      transform: translateY(22px) rotate(-1deg) scale(0.94);
     }
 
-    .active .flash-card.one {
-      animation: flashIn 0.42s ease 1.35s forwards, flashOut 0.28s ease 2.48s forwards;
-    }
+    .stage.examples-start .flash-card.one { animation: flashIn 0.42s ease 0.35s forwards; }
+    .stage.examples-start .flash-card.two { animation: flashIn 0.42s ease 0.78s forwards; }
 
-    .active .flash-card.two {
-      animation: flashIn 0.42s ease 2.82s forwards;
-    }
-
-    .ending {
-      width: 100%;
+    .closing-note {
+      position: absolute;
+      left: 50%;
+      bottom: 16%;
+      width: 92%;
+      translate: -50% 0;
       text-align: center;
-      display: grid;
-      place-items: center;
-      gap: 56px;
-    }
-
-    .brand-lockup {
-      display: flex;
-      align-items: center;
-      gap: 18px;
+      margin: 0;
+      font-size: clamp(20px, 5vw, 50px);
+      line-height: 1.05;
       font-weight: 950;
-      font-size: clamp(42px, 8vw, 88px);
       letter-spacing: -0.05em;
+      opacity: 0;
+      transform: translateY(18px) scale(0.97);
+      text-shadow: 0 0 20px rgba(66, 199, 140, 0.2);
     }
 
-    .cracked-c,
-    .watermark-c {
-      position: relative;
-      display: inline-grid;
-      place-items: center;
-      color: var(--green);
-      font-family: var(--marker);
-      font-weight: 950;
-      text-shadow: var(--shadow);
-    }
-
-    .cracked-c::before,
-    .watermark-c::before {
-      content: "";
-      position: absolute;
-      width: 10%;
-      height: 86%;
-      background: var(--navy);
-      transform: rotate(27deg) translate(18%, -2%);
-      box-shadow: 0 0 0 2px rgba(66,199,140,0.05);
-    }
-
-    .cracked-c::after,
-    .watermark-c::after {
-      content: "";
-      position: absolute;
-      width: 8%;
-      height: 48%;
-      background: var(--navy);
-      transform: rotate(-31deg) translate(-118%, 24%);
-    }
-
-    .active .cracked-c {
-      animation: logoPulse 1.5s ease-in-out 0.8s infinite;
-    }
+    .stage.ending-start .closing-note { animation: answerIn 0.6s ease forwards; }
+    .stage.ending-start .examples { animation: softOut 0.5s ease forwards; }
 
     .watermark {
       position: absolute;
@@ -478,7 +448,7 @@
       align-items: center;
       gap: 8px;
       color: rgba(255,255,255,0.6);
-      font-size: clamp(15px, 2.6vw, 30px);
+      font-size: clamp(13px, 2.5vw, 28px);
       font-weight: 900;
       letter-spacing: -0.035em;
       opacity: 0.58;
@@ -486,7 +456,33 @@
     }
 
     .watermark-c {
+      position: relative;
+      display: inline-grid;
+      place-items: center;
+      color: var(--green);
+      font-family: var(--marker);
       font-size: 1.35em;
+      font-weight: 950;
+      text-shadow: var(--shadow);
+    }
+
+    .watermark-c::before {
+      content: "";
+      position: absolute;
+      width: 10%;
+      height: 86%;
+      background: var(--navy);
+      transform: rotate(27deg) translate(18%, -2%);
+      box-shadow: 0 0 0 2px rgba(66,199,140,0.05);
+    }
+
+    .watermark-c::after {
+      content: "";
+      position: absolute;
+      width: 8%;
+      height: 48%;
+      background: var(--navy);
+      transform: rotate(-31deg) translate(-118%, 24%);
     }
 
     .progress {
@@ -510,22 +506,41 @@
       animation: progress 19s linear forwards;
     }
 
-    @keyframes writeIn {
-      0% { opacity: 0; transform: translateX(-26px) rotate(-0.8deg); filter: blur(8px); }
+    @keyframes fadeWrite {
+      0% { opacity: 0; transform: translateX(-18px) rotate(-0.5deg); filter: blur(6px); }
       100% { opacity: 1; transform: translateX(0) rotate(0); filter: blur(0); }
+    }
+
+    @keyframes simpleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @keyframes softOut { to { opacity: 0; transform: translateY(-10px) scale(0.98); } }
+
+    @keyframes formulaBoxIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @keyframes formulaToTriangle {
+      to { opacity: 0; transform: translateY(-28px) scale(0.78); }
+    }
+
+    @keyframes popSpotlight {
+      0%, 100% { color: var(--white); transform: translateY(0) scale(1); }
+      44%, 66% { color: var(--green); transform: translateY(-3px) scale(1.04); text-shadow: var(--shadow); }
     }
 
     @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
+    @keyframes triangleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @keyframes triangleSettle { to { top: 15%; width: min(82%, 575px); } }
+
     @keyframes moveUp {
-      0% { opacity: 0; transform: translateY(86px) scale(0.8); }
-      72% { opacity: 1; transform: translateY(-8px) scale(1.06); }
+      0% { opacity: 0; transform: translateY(52px) scale(0.8); }
+      72% { opacity: 1; transform: translateY(-6px) scale(1.06); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     @keyframes moveDown {
-      0% { opacity: 0; transform: translateY(-74px) scale(0.92); }
-      72% { opacity: 1; transform: translateY(8px) scale(1.04); }
+      0% { opacity: 0; transform: translateY(-46px) scale(0.92); }
+      72% { opacity: 1; transform: translateY(6px) scale(1.04); }
       100% { opacity: 1; transform: translateY(0) scale(1); }
     }
 
@@ -559,33 +574,29 @@
       100% { opacity: 0; left: 68%; top: 72%; }
     }
 
-    @keyframes answerIn {
-      to { opacity: 1; transform: translateY(0) scale(1); }
-    }
+    @keyframes answerIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
-    @keyframes answerOut {
-      to { opacity: 0; transform: translateY(-16px) scale(0.96); }
-    }
+    @keyframes answerOut { to { opacity: 0; transform: translateY(-12px) scale(0.96); } }
 
     @keyframes pulseGlow {
       0%, 100% { color: var(--white); text-shadow: var(--shadow); transform: scale(1); }
-      50% { color: var(--green); text-shadow: 0 0 38px rgba(66,199,140,0.78), 0 0 86px rgba(66,199,140,0.32); transform: scale(1.035); }
+      50% { color: var(--green); text-shadow: 0 0 34px rgba(66,199,140,0.76), 0 0 76px rgba(66,199,140,0.3); transform: scale(1.03); }
     }
 
-    @keyframes flashIn {
-      to { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
-    }
-
-    @keyframes flashOut {
-      to { opacity: 0; transform: translateY(-22px) rotate(1deg) scale(0.98); }
-    }
-
-    @keyframes logoPulse {
-      0%, 100% { transform: scale(1); filter: brightness(1); }
-      50% { transform: scale(1.08); filter: brightness(1.24); }
-    }
+    @keyframes flashIn { to { opacity: 1; transform: translateY(0) rotate(0) scale(1); } }
 
     @keyframes progress { to { width: 100%; } }
+
+    @media (max-height: 720px) {
+      .workspace { padding-top: 14px; gap: 7px; }
+      .hook { min-height: 21%; padding-block: 8px; }
+      .board-note { top: 8px; }
+      .formula-box { top: 16%; }
+      .triangle-wrap { top: 18%; width: min(78%, 520px); }
+      .stage.triangle-start .triangle-wrap { animation-name: triangleIn; }
+      .reveal-formula { top: 59%; }
+      .flash-card { min-height: 48px; }
+    }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -599,117 +610,78 @@
 </head>
 <body>
   <main class="stage" aria-label="CrackIt formula triangle educational animation">
-    <section class="scene hook-scene active" data-scene="0">
-      <div class="hook-stack">
+    <div class="workspace">
+      <header class="hook" aria-label="Formula triangle hook text">
         <span class="kicker">Formula triangles</span>
-        <span class="hook-line">Most apprentices don’t realise <span class="green">this…</span></span>
-        <span class="hook-line">If <span class="green">ONE symbol</span> equals everything else multiplied together…</span>
-        <span class="hook-line">you can turn it into a <span class="green">triangle.</span></span>
-      </div>
-    </section>
+        <p class="hook-line">Most apprentices don’t realise <span class="green">this…</span></p>
+        <p class="hook-line">If <span class="green">ONE symbol</span> equals everything else multiplied together…</p>
+        <p class="hook-line">you can turn it into a <span class="green">triangle.</span></p>
+      </header>
 
-    <section class="scene formula-scene" data-scene="1">
-      <div class="formula-title">This looks heavy at first.</div>
-      <div class="formula-box" aria-label="P equals root three times V L times I L times cosine theta">
-        <div class="formula" id="formula">
-          <span class="p-symbol">P</span>
-          <span class="equals">=</span>
-          <span class="right-side">
-            <span>√3</span> <span>×</span> <span>V<sub>L</sub></span> <span>×</span> <span>I<sub>L</sub></span> <span>×</span> <span>cosθ</span>
-          </span>
+      <section class="board" aria-label="One-screen animated whiteboard explanation">
+        <div class="board-note">Watch the formula rearrange on the same whiteboard.</div>
+
+        <div class="formula-box" aria-label="P equals root three times V L times I L times cosine theta">
+          <div class="formula" id="formula">
+            <span class="p-symbol">P</span>
+            <span class="equals">=</span>
+            <span class="right-side">
+              <span>√3</span> <span>×</span> <span>V<sub>L</sub></span> <span>×</span> <span>I<sub>L</sub></span> <span>×</span> <span>cosθ</span>
+            </span>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <section class="scene triangle-scene" data-scene="2">
-      <div class="triangle-wrap" aria-label="Formula triangle with P over root three times V L times I L times cosine theta">
-        <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
-          <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
-          <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
-          <line class="tri-line" x1="132" y1="396" x2="688" y2="396" />
-        </svg>
-        <div class="scribble" aria-hidden="true"></div>
-        <div class="triangle-symbol tri-top">P</div>
-        <div class="triangle-symbol tri-bottom">√3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
-      </div>
-    </section>
-
-    <section class="scene cover-scene" data-scene="3">
-      <div class="mini-triangle" aria-label="Cover up method formula triangle">
-        <svg viewBox="0 0 660 555" aria-hidden="true">
-          <line x1="330" y1="42" x2="58" y2="506" stroke="rgba(66,199,140,.92)" stroke-width="8" stroke-linecap="round" />
-          <line x1="330" y1="42" x2="602" y2="506" stroke="rgba(66,199,140,.92)" stroke-width="8" stroke-linecap="round" />
-          <line x1="112" y1="315" x2="548" y2="315" stroke="rgba(66,199,140,.92)" stroke-width="8" stroke-linecap="round" />
-        </svg>
-        <div class="top">P</div>
-        <div class="bottom">√3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
-        <div class="cover-block cover-p" aria-hidden="true"></div>
-        <div class="cover-block cover-il" aria-hidden="true"></div>
-        <div class="marker-tip" aria-hidden="true"></div>
-      </div>
-      <div class="reveal-formula" aria-live="polite">
-        <div class="answer answer-one">P = √3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
-        <div class="answer answer-two">I<sub>L</sub> = P / (√3 × V<sub>L</sub> × cosθ)</div>
-      </div>
-    </section>
-
-    <section class="scene examples-scene" data-scene="4">
-      <div class="examples">
-        <h2>Works with other formulas too.</h2>
-        <div class="flash-card one">X<sub>L</sub> = 2πfL</div>
-        <div class="flash-card two">P = V × I × cosθ</div>
-      </div>
-    </section>
-
-    <section class="scene ending-scene" data-scene="5">
-      <div class="ending">
-        <h2>More revision shortcuts on <span class="green">CrackIt.</span></h2>
-        <div class="brand-lockup" aria-label="CrackIt logo-style text">
-          <span class="cracked-c">C</span><span>CrackIt</span>
+        <div class="triangle-wrap" aria-label="Formula triangle with P over root three times V L times I L times cosine theta">
+          <svg class="triangle-outline" viewBox="0 0 820 720" aria-hidden="true">
+            <line class="tri-line" x1="410" y1="58" x2="72" y2="646" />
+            <line class="tri-line" x1="410" y1="58" x2="748" y2="646" />
+            <line class="tri-line" x1="132" y1="396" x2="688" y2="396" />
+          </svg>
+          <div class="scribble" aria-hidden="true"></div>
+          <div class="triangle-symbol tri-top">P</div>
+          <div class="triangle-symbol tri-bottom">√3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
+          <div class="cover-block cover-p" aria-hidden="true"></div>
+          <div class="cover-block cover-il" aria-hidden="true"></div>
+          <div class="marker-tip" aria-hidden="true"></div>
         </div>
-      </div>
-    </section>
+
+        <div class="reveal-formula" aria-live="polite">
+          <div class="answer answer-one">P = √3 × V<sub>L</sub> × I<sub>L</sub> × cosθ</div>
+          <div class="answer answer-two">I<sub>L</sub> = P / (√3 × V<sub>L</sub> × cosθ)</div>
+        </div>
+
+        <div class="examples" aria-label="Extra example formulas">
+          <h2>Same trick, smaller formulas below.</h2>
+          <div class="cards">
+            <div class="flash-card one">X<sub>L</sub> = 2πfL</div>
+            <div class="flash-card two">P = V × I × cosθ</div>
+          </div>
+        </div>
+
+        <p class="closing-note">More revision shortcuts on <span class="green">CrackIt.</span></p>
+      </section>
+    </div>
 
     <div class="watermark" aria-hidden="true"><span class="watermark-c">C</span><span>CrackIt</span></div>
     <div class="progress" aria-hidden="true"><span></span></div>
   </main>
 
   <script>
-    const scenes = [...document.querySelectorAll('.scene')];
-    const sceneDurations = [4000, 2700, 2300, 5200, 3400, 1400];
-    const formula = document.querySelector('#formula');
-    const pSymbol = formula.querySelector('.p-symbol');
-    const rightSide = formula.querySelector('.right-side');
+    const stage = document.querySelector('.stage');
+    const timelineSteps = [
+      ['formula-start', 3900],
+      ['triangle-start', 4500],
+      ['cover-start', 3600],
+      ['examples-start', 5400],
+      ['ending-start', 2100],
+    ];
 
-    let sceneIndex = 0;
+    let elapsed = 0;
 
-    function activateScene(index) {
-      scenes.forEach((scene, i) => scene.classList.toggle('active', i === index));
-
-      if (index === 1) {
-        [...formula.children].forEach(child => child.classList.remove('dim', 'spotlight'));
-        rightSide.classList.remove('spotlight');
-        setTimeout(() => pSymbol.classList.add('spotlight'), 550);
-        setTimeout(() => {
-          pSymbol.classList.remove('spotlight');
-          pSymbol.classList.add('dim');
-          rightSide.classList.add('spotlight');
-        }, 1700);
-      }
-    }
-
-    function nextScene() {
-      sceneIndex += 1;
-      if (sceneIndex >= scenes.length) {
-        sceneIndex = scenes.length - 1;
-        return;
-      }
-
-      activateScene(sceneIndex);
-      setTimeout(nextScene, sceneDurations[sceneIndex]);
-    }
-
-    setTimeout(nextScene, sceneDurations[0]);
+    timelineSteps.forEach(([className, delay]) => {
+      elapsed += delay;
+      setTimeout(() => stage.classList.add(className), elapsed);
+    });
   </script>
 </body>
 </html>
