@@ -428,8 +428,16 @@
       height: 22%;
     }
 
+    .cover-cos {
+      top: 61%;
+      left: 68%;
+      width: 20%;
+      height: 22%;
+    }
+
     .stage.cover-start .cover-vl { animation: coverPop 0.48s ease 0.25s forwards, coverFade 0.35s ease 2.1s forwards; }
     .stage.cover-start .cover-il { animation: coverPop 0.48s ease 2.75s forwards, coverFade 0.35s ease 4.75s forwards; }
+    .stage.cover-start .cover-cos { animation: coverPop 0.48s ease 5.45s forwards, coverFade 0.35s ease 7.45s forwards; }
 
     .hand-pointer {
       position: absolute;
@@ -453,9 +461,40 @@
       transform: translateY(-3%) rotate(-13deg);
     }
 
-    .stage.cover-start .hand-pointer { animation: handMove 5.35s ease 0.55s forwards; }
+    .stage.cover-start .hand-pointer { animation: handMove 7.85s ease 0.55s forwards; }
 
     .stage.cover-start .triangle-helper { animation: helperOut 0.42s ease forwards; }
+
+    .cover-helper {
+      position: absolute;
+      top: 58.5%;
+      left: 50%;
+      z-index: 8;
+      width: min(88%, 680px);
+      translate: -50% 0;
+      display: grid;
+      place-items: center;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(16px, 3.8vw, 38px);
+      font-weight: 790;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      text-align: center;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.22), 0 0 16px rgba(56, 201, 138, 0.14);
+      pointer-events: none;
+    }
+
+    .cover-helper p {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(7px);
+    }
+
+    .stage.cover-start .cover-helper-vl { animation: promptFade 2.08s ease 0s forwards; }
+    .stage.cover-start .cover-helper-il { animation: promptFade 2.1s ease 2.38s forwards; }
+    .stage.cover-start .cover-helper-cos { animation: promptFade 2.1s ease 5.08s forwards; }
 
     .reveal-formula {
       position: absolute;
@@ -484,6 +523,7 @@
 
     .stage.cover-start .answer-one { animation: answerIn 0.5s ease 0.86s forwards, answerOut 0.34s ease 2.26s forwards; }
     .stage.cover-start .answer-two { animation: answerIn 0.5s ease 3.34s forwards, pulseGlow 0.82s ease 4.02s 2, answerOut 0.34s ease 5.1s forwards; }
+    .stage.cover-start .answer-three { animation: answerIn 0.5s ease 6.04s forwards, pulseGlow 0.82s ease 6.72s 2, answerOut 0.34s ease 7.8s forwards; }
 
     .examples {
       position: absolute;
@@ -641,7 +681,7 @@
       width: 0;
       background: var(--green);
       box-shadow: 0 0 16px rgba(66,199,140,0.75);
-      animation: progress 21.7s linear forwards;
+      animation: progress 24.2s linear forwards;
     }
 
     .playback-controls {
@@ -816,11 +856,19 @@
 
     @keyframes handMove {
       0% { opacity: 0; left: 23%; top: 66%; transform: rotate(-18deg) scale(0.82); }
-      8% { opacity: 1; left: 35%; top: 64%; transform: rotate(-10deg) scale(1); }
-      38% { opacity: 1; left: 38%; top: 64%; transform: rotate(-7deg) scale(1.04); }
-      48% { opacity: 0.72; left: 50%; top: 63%; transform: rotate(-14deg) scale(0.94); }
-      78% { opacity: 1; left: 54%; top: 64%; transform: rotate(-8deg) scale(1.04); }
-      100% { opacity: 0; left: 62%; top: 67%; transform: rotate(-18deg) scale(0.82); }
+      5.5% { opacity: 1; left: 35%; top: 64%; transform: rotate(-10deg) scale(1); }
+      25.9% { opacity: 1; left: 38%; top: 64%; transform: rotate(-7deg) scale(1.04); }
+      32.7% { opacity: 0.72; left: 50%; top: 63%; transform: rotate(-14deg) scale(0.94); }
+      53.2% { opacity: 1; left: 54%; top: 64%; transform: rotate(-8deg) scale(1.04); }
+      68.2% { opacity: 0.72; left: 62%; top: 63%; transform: rotate(-14deg) scale(0.94); }
+      87% { opacity: 1; left: 73%; top: 64%; transform: rotate(-8deg) scale(1.04); }
+      100% { opacity: 0; left: 82%; top: 67%; transform: rotate(-18deg) scale(0.82); }
+    }
+
+    @keyframes promptFade {
+      0% { opacity: 0; transform: translateY(7px); }
+      18%, 76% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-7px); }
     }
 
     @keyframes answerIn { to { opacity: 1; transform: translateY(0) scale(1); } }
@@ -863,6 +911,7 @@
       .triangle-helper { top: clamp(50px, 8vh, 64px); }
       .formula-box { top: 58%; }
       .stage.triangle-start .formula-box { top: 14%; min-height: 220px; height: 34%; }
+      .cover-helper { top: 57%; }
       .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
     }
@@ -915,14 +964,22 @@
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
+            <div class="cover-block cover-cos" aria-hidden="true"></div>
             <div class="hand-pointer" aria-hidden="true"></div>
           </div>
         </div>
 
 
+        <div class="cover-helper" aria-live="polite">
+          <p class="cover-helper-vl">Need V<sub>L</sub>? Cover it to reveal the formula</p>
+          <p class="cover-helper-il">Need I<sub>L</sub>? Cover it to reveal the formula</p>
+          <p class="cover-helper-cos">Need cosθ? Cover it to reveal the formula</p>
+        </div>
+
         <div class="reveal-formula" aria-live="polite">
           <div class="answer answer-one">V<sub>L</sub> = P / (√3 × I<sub>L</sub> × cosθ)</div>
           <div class="answer answer-two">I<sub>L</sub> = P / (√3 × V<sub>L</sub> × cosθ)</div>
+          <div class="answer answer-three">cosθ = P / (√3 × V<sub>L</sub> × I<sub>L</sub>)</div>
         </div>
 
         <div class="examples" aria-label="Extra example formulas">
@@ -985,7 +1042,7 @@
     const timelineSteps = [
       ['formula-start', 2200],
       ['triangle-start', 4300],
-      ['cover-start', 6300],
+      ['cover-start', 8800],
       ['examples-start', 5400],
       ['ending-start', 2100],
     ];
