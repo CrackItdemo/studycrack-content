@@ -216,7 +216,7 @@
       width: min(86%, 620px);
       translate: -50% 0;
       color: rgba(255, 255, 255, 0.8);
-      font-size: clamp(12px, 2.65vw, 25px);
+      font-size: clamp(18px, 4.15vw, 42px);
       font-weight: 850;
       line-height: 1.18;
       letter-spacing: -0.015em;
@@ -227,8 +227,8 @@
       pointer-events: none;
     }
 
-    .stage.triangle-start .triangle-helper {
-      animation: helperIn 0.38s ease forwards, helperOut 0.42s ease 0.88s forwards;
+    .stage.helper-visible .triangle-helper {
+      animation: helperIn 0.46s ease forwards;
     }
 
     .formula-box {
@@ -452,7 +452,9 @@
       transform: translateY(-3%) rotate(-13deg);
     }
 
-    .stage.cover-start .hand-pointer { animation: handMove 5.35s ease 0.1s forwards; }
+    .stage.cover-start .hand-pointer { animation: handMove 5.35s ease 0.55s forwards; }
+
+    .stage.cover-start .triangle-helper { animation: helperOut 0.42s ease forwards; }
 
     .reveal-formula {
       position: absolute;
@@ -638,7 +640,7 @@
       width: 0;
       background: var(--green);
       box-shadow: 0 0 16px rgba(66,199,140,0.75);
-      animation: progress 19s linear forwards;
+      animation: progress 21.7s linear forwards;
     }
 
     .playback-controls {
@@ -875,7 +877,7 @@
           <p class="opening-subtitle">Most apprentices don’t know this.</p>
           <p class="opening-support">If <span class="concept-highlight">one symbol</span> equals everything else multiplied together… you can make a triangle out of it.</p>
         </div>
-        <div class="triangle-helper">What’s on the left goes on top.</div>
+        <div class="triangle-helper">The symbol on the left goes on top.</div>
 
         <div class="formula-box" aria-label="P equals root three times V L times I L times cosine theta">
           <div class="formula" id="formula">
@@ -971,7 +973,7 @@
     const timelineSteps = [
       ['formula-start', 2200],
       ['triangle-start', 4300],
-      ['cover-start', 3600],
+      ['cover-start', 6300],
       ['examples-start', 5400],
       ['ending-start', 2100],
     ];
@@ -1038,6 +1040,7 @@
         pSymbol.style.left = `${pTarget.left}px`;
         pSymbol.style.top = `${pTarget.top}px`;
         pSymbol.style.transform = 'translate(0, 0) scale(1.38)';
+        queueMorphStep(() => stage.classList.add('helper-visible'), 900);
 
         setSymbolTransition(equals, 350, 900, 'opacity, transform');
         equals.style.opacity = '0';
@@ -1148,7 +1151,7 @@
       document.querySelector('#formula').classList.remove('is-morphing');
       document.querySelectorAll('#formula span').forEach((symbol) => symbol.removeAttribute('style'));
       stage.classList.add('is-resetting');
-      stage.classList.remove('is-paused', 'dividers-visible', 'triangle-draw', ...timelineSteps.map(([className]) => className));
+      stage.classList.remove('is-paused', 'helper-visible', 'dividers-visible', 'triangle-draw', ...timelineSteps.map(([className]) => className));
       stage.getBoundingClientRect();
 
       requestAnimationFrame(() => {
