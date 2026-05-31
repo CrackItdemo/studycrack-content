@@ -92,12 +92,12 @@
 
     .brand-title {
       margin: 0;
-      font-weight: 950;
-      font-size: clamp(29px, 8.4vw, 84px);
-      line-height: 0.92;
-      letter-spacing: -0.065em;
-      color: var(--white);
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+      font-weight: 880;
+      font-size: clamp(26px, 7.4vw, 74px);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+      color: rgba(255, 255, 255, 0.78);
+      text-shadow: 0 2px 9px rgba(0, 0, 0, 0.16);
       white-space: nowrap;
     }
 
@@ -107,43 +107,43 @@
 
     .opening-copy {
       position: absolute;
-      top: clamp(128px, 21.5vw, 218px);
+      top: clamp(126px, 20.4vw, 214px);
       left: 50%;
       z-index: 8;
       width: min(91%, 760px);
       translate: -50% 0;
       display: grid;
       justify-items: center;
-      gap: clamp(10px, 1.8vh, 22px);
+      gap: clamp(14px, 2.4vh, 30px);
       text-align: center;
       pointer-events: none;
     }
 
     .opening-title {
       margin: 0;
-      color: var(--white);
-      font-size: clamp(34px, 9.2vw, 94px);
-      font-weight: 950;
-      line-height: 0.96;
-      letter-spacing: -0.055em;
-      text-transform: none;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: clamp(24px, 6.7vw, 68px);
+      font-weight: 780;
+      line-height: 1.02;
+      letter-spacing: 0.035em;
+      text-transform: uppercase;
       text-wrap: balance;
-      text-shadow: 0 3px 14px rgba(0, 0, 0, 0.24);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
       opacity: 0;
-      transform: translateY(-10px) scale(0.96);
+      transform: translateY(-8px) scale(0.98);
       animation: titleIn 0.68s cubic-bezier(.2,.9,.2,1) 0.05s forwards;
     }
 
     .opening-subtitle {
       margin: 0;
-      max-width: 13ch;
-      color: var(--white);
-      font-size: clamp(22px, 5.55vw, 56px);
-      font-weight: 900;
-      line-height: 1.03;
-      letter-spacing: -0.04em;
+      max-width: 20ch;
+      color: rgba(255, 255, 255, 0.58);
+      font-size: clamp(16px, 3.95vw, 40px);
+      font-weight: 680;
+      line-height: 1.14;
+      letter-spacing: -0.018em;
       text-wrap: balance;
-      text-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+      text-shadow: 0 2px 9px rgba(0, 0, 0, 0.16);
       opacity: 0;
       transform: translateY(12px) scale(0.98);
       animation: simpleIn 0.58s ease 0.42s forwards;
@@ -152,54 +152,26 @@
     .opening-support {
       position: relative;
       isolation: isolate;
-      margin: clamp(10px, 1.9vh, 22px) 0 0;
-      max-width: 22ch;
-      padding: clamp(14px, 3vw, 32px) clamp(14px, 3.6vw, 38px);
-      border: 2px solid rgba(56, 201, 138, 0.34);
-      border-radius: clamp(16px, 3.8vw, 34px);
-      color: rgba(255, 255, 255, 0.96);
-      font-size: clamp(23px, 5.55vw, 58px);
-      font-weight: 950;
-      line-height: 1.03;
-      letter-spacing: -0.035em;
+      margin: clamp(16px, 3.5vh, 42px) 0 0;
+      max-width: 24ch;
+      padding: 0 clamp(3px, 0.9vw, 8px);
+      border: 0;
+      color: rgba(255, 255, 255, 0.93);
+      font-size: clamp(25px, 6.15vw, 64px);
+      font-weight: 860;
+      line-height: 1.08;
+      letter-spacing: -0.038em;
       text-wrap: balance;
-      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.26), 0 0 18px rgba(56, 201, 138, 0.22);
+      text-shadow: 0 3px 16px rgba(0, 0, 0, 0.28);
       opacity: 0;
-      transform: translateY(10px) scale(0.985);
-      filter: drop-shadow(0 0 14px rgba(56, 201, 138, 0.12));
-      animation: simpleIn 0.58s ease 0.74s forwards, insightBreath 2.25s ease-in-out 1.42s infinite;
+      transform: translateY(12px) scale(0.985);
+      filter: none;
+      animation: simpleIn 0.62s ease 0.74s forwards;
     }
 
-    .opening-support::before,
-    .opening-support::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-    }
-
-    .opening-support::before {
-      inset: 0;
-      z-index: -1;
-      border-radius: inherit;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(56, 201, 138, 0.16), transparent 58%),
-        rgba(255, 255, 255, 0.046);
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.055), 0 0 34px rgba(56, 201, 138, 0.18);
-      opacity: 0.9;
-      animation: insightPanelPulse 2.25s ease-in-out 1.42s infinite;
-    }
-
-    .opening-support::after {
-      top: clamp(7px, 1.4vw, 14px);
-      left: 50%;
-      width: clamp(36px, 12vw, 120px);
-      height: clamp(2px, 0.55vw, 5px);
-      border-radius: 999px;
-      translate: -50% 0;
-      background: linear-gradient(90deg, transparent, rgba(56, 201, 138, 0.9), transparent);
-      box-shadow: 0 0 16px rgba(56, 201, 138, 0.38);
-      opacity: 0.74;
-      animation: insightAccent 2.25s ease-in-out 1.42s infinite;
+    .opening-support .concept-highlight {
+      color: var(--green);
+      text-shadow: 0 0 16px rgba(56, 201, 138, 0.28);
     }
 
     .stage.formula-start .opening-subtitle,
@@ -272,13 +244,14 @@
       background: rgba(255, 255, 255, 0.026);
       box-shadow: none;
       text-align: center;
-      opacity: 1;
+      opacity: 0.72;
       transform: translateY(0) scale(1);
       transition:
         top 1.35s cubic-bezier(.2,.9,.18,1),
         width 1.35s cubic-bezier(.2,.9,.18,1),
         height 1.35s cubic-bezier(.2,.9,.18,1),
         padding 1.35s cubic-bezier(.2,.9,.18,1),
+        opacity 0.8s ease,
         border-color 0.8s ease,
         background 0.8s ease,
         box-shadow 0.8s ease;
@@ -287,6 +260,7 @@
     .stage.formula-start .formula-box {
       top: 60%;
       width: min(94%, 795px);
+      opacity: 1;
       box-shadow: inset 0 0 0 1px rgba(56, 201, 138, 0.04);
     }
 
@@ -311,13 +285,14 @@
       justify-content: center;
       gap: clamp(4px, 1vw, 12px);
       font-family: var(--marker);
-      font-size: clamp(22px, 5.35vw, 60px);
-      font-weight: 950;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: clamp(21px, 5vw, 56px);
+      font-weight: 860;
       line-height: 1.12;
-      letter-spacing: -0.045em;
-      text-shadow: var(--shadow);
+      letter-spacing: -0.038em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), 0 0 14px rgba(56, 201, 138, 0.12);
       white-space: nowrap;
-      filter: saturate(1.1);
+      filter: saturate(1.02);
     }
 
     .formula span {
@@ -358,6 +333,7 @@
     .stage.triangle-start .formula {
       display: block;
       font-size: clamp(20px, 4.7vw, 50px);
+      color: rgba(255, 255, 255, 0.88);
     }
 
     .stage.triangle-start .formula span,
@@ -862,14 +838,14 @@
     @media (max-height: 720px) {
       .workspace { padding-top: 12px; }
       .brand-lockup { top: 16px; }
-      .opening-copy { top: 108px; gap: 7px; }
-      .opening-title { font-size: clamp(38px, 11vw, 84px); }
-      .opening-subtitle { font-size: clamp(22px, 5.6vw, 44px); }
+      .opening-copy { top: 106px; gap: 10px; }
+      .opening-title { font-size: clamp(24px, 7vw, 52px); }
+      .opening-subtitle { font-size: clamp(16px, 4vw, 32px); }
       .opening-support {
-        max-width: 22ch;
-        padding: 12px 14px;
-        font-size: clamp(21px, 4.8vw, 34px);
-        margin-top: 4px;
+        max-width: 24ch;
+        padding: 0 4px;
+        font-size: clamp(22px, 5.1vw, 40px);
+        margin-top: 10px;
       }
       .triangle-helper { top: 28px; }
       .formula-box { top: 58%; }
@@ -898,7 +874,7 @@
         <div class="opening-copy" aria-label="Formula triangle hook text">
           <h1 class="opening-title">FORMULA TRIANGLES</h1>
           <p class="opening-subtitle">Most apprentices don’t know this.</p>
-          <p class="opening-support">If one symbol equals everything else multiplied together… you can make a triangle out of it.</p>
+          <p class="opening-support">If <span class="concept-highlight">one symbol</span> equals everything else multiplied together… you can make a triangle out of it.</p>
         </div>
         <div class="triangle-helper">What’s on the left goes on top.</div>
 
