@@ -210,25 +210,26 @@
 
     .triangle-helper {
       position: absolute;
-      top: clamp(34px, 7.2vw, 74px);
+      top: clamp(58px, 13.5vw, 160px);
       left: 50%;
       z-index: 7;
-      width: min(86%, 620px);
+      width: min(88%, 660px);
       translate: -50% 0;
-      color: rgba(255, 255, 255, 0.8);
-      font-size: clamp(18px, 4.15vw, 42px);
-      font-weight: 850;
+      color: rgba(255, 255, 255, 0.92);
+      font-size: clamp(20px, 4.55vw, 46px);
+      font-weight: 870;
       line-height: 1.18;
-      letter-spacing: -0.015em;
+      letter-spacing: -0.018em;
       text-align: center;
-      text-shadow: 0 0 13px rgba(66, 199, 140, 0.42), 0 0 26px rgba(66, 199, 140, 0.18);
+      text-shadow: 0 0 15px rgba(66, 199, 140, 0.5), 0 0 30px rgba(66, 199, 140, 0.24), 0 2px 10px rgba(0, 0, 0, 0.22);
+      filter: brightness(1.06);
       opacity: 0;
       transform: translateY(7px) scale(0.98);
       pointer-events: none;
     }
 
     .stage.helper-visible .triangle-helper {
-      animation: helperIn 0.46s ease forwards;
+      animation: helperIn 0.46s ease forwards, helperGlow 2.6s ease-in-out 0.46s infinite;
     }
 
     .formula-box {
@@ -748,6 +749,17 @@
 
     @keyframes helperIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
+    @keyframes helperGlow {
+      0%, 100% {
+        text-shadow: 0 0 15px rgba(66, 199, 140, 0.5), 0 0 30px rgba(66, 199, 140, 0.24), 0 2px 10px rgba(0, 0, 0, 0.22);
+        filter: brightness(1.06);
+      }
+      50% {
+        text-shadow: 0 0 18px rgba(66, 199, 140, 0.58), 0 0 36px rgba(66, 199, 140, 0.3), 0 2px 11px rgba(0, 0, 0, 0.24);
+        filter: brightness(1.12);
+      }
+    }
+
     @keyframes helperOut { to { opacity: 0; transform: translateY(-8px) scale(0.98); } }
 
     @keyframes softOut { to { opacity: 0; transform: translateY(-10px) scale(0.98); } }
@@ -848,7 +860,7 @@
         font-size: clamp(22px, 5.1vw, 40px);
         margin-top: 10px;
       }
-      .triangle-helper { top: 28px; }
+      .triangle-helper { top: clamp(50px, 8vh, 64px); }
       .formula-box { top: 58%; }
       .stage.triangle-start .formula-box { top: 14%; min-height: 220px; height: 34%; }
       .reveal-formula { top: 68%; }
@@ -877,7 +889,7 @@
           <p class="opening-subtitle">Most apprentices don’t know this.</p>
           <p class="opening-support">If <span class="concept-highlight">one symbol</span> equals everything else multiplied together… you can make a triangle out of it.</p>
         </div>
-        <div class="triangle-helper">The symbol on the left goes on top.</div>
+        <div class="triangle-helper">The symbol on the left goes on top</div>
 
         <div class="formula-box" aria-label="P equals root three times V L times I L times cosine theta">
           <div class="formula" id="formula">
