@@ -341,22 +341,15 @@
       top: 31.8%;
       transform: translate(-50%, -50%) scale(1.38);
       color: var(--green);
-      animation: none;
-      transition-duration: 1.55s;
-      transition-delay: 0s;
-    }
-
-    .stage.triangle-start .right-side > span {
-      animation: none;
     }
 
     .stage.triangle-start .equals {
-      left: 17.2%;
-      top: 50%;
+      left: 27%;
+      top: 45%;
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.82);
-      transition-duration: 0.82s;
-      transition-delay: 1.55s;
+      transform: translate(-50%, -50%) scale(0.7);
+      transition-duration: 1.7s;
+      transition-delay: 0.48s, 0s, 0s, 0s, 0s, 0s;
     }
 
     .stage.triangle-start .root,
@@ -366,8 +359,7 @@
       top: 73%;
       color: var(--soft-white);
       transform: translate(-50%, -50%) scale(0.98);
-      transition-duration: 1.28s;
-      transition-delay: 2.42s;
+      transition-delay: 0.12s;
     }
 
     .stage.triangle-start .root { left: 24.5%; }
@@ -380,8 +372,8 @@
       opacity: 0;
       color: rgba(56, 201, 138, 0.92);
       transform: translate(-50%, -50%) scaleY(1.55) scaleX(0.46);
-      transition-duration: 0.72s, 1.28s, 1.28s, 1.28s, 1.28s, 0.55s;
-      transition-delay: 3.72s, 2.42s, 2.42s, 2.42s, 2.42s, 2.42s;
+      transition-duration: 1.7s;
+      transition-delay: 0.62s, 0s, 0.12s, 0.12s, 0s, 0s;
     }
 
     .stage.triangle-start .factor-group .mult:nth-child(2) { left: 35.1%; }
@@ -408,17 +400,13 @@
       filter: drop-shadow(0 0 8px rgba(56, 201, 138, 0.25));
     }
 
-    .stage.triangle-start .tri-line {
-      animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 4.55s forwards;
-    }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 4.7s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 5s; }
-    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 5.15s; }
+    .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 1.45s forwards; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.6s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.9s; }
+    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 2.05s; }
     .stage.triangle-start .tri-line:nth-child(5),
     .stage.triangle-start .tri-line:nth-child(6),
-    .stage.triangle-start .tri-line:nth-child(7) {
-      animation: dividerFadeIn 0.72s ease 3.72s forwards;
-    }
+    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 1.8s; animation-duration: 0.95s; }
 
     .cover-block {
       position: absolute;
@@ -780,11 +768,6 @@
 
     @keyframes drawLine { to { stroke-dashoffset: 0; opacity: 1; } }
 
-    @keyframes dividerFadeIn {
-      from { stroke-dashoffset: 0; opacity: 0; }
-      to { stroke-dashoffset: 0; opacity: 1; }
-    }
-
     @keyframes triangleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
     @keyframes triangleSettle { to { top: 15%; width: min(82%, 575px); } }
@@ -993,7 +976,7 @@
     const timelineSteps = [
       ['formula-start', 2200],
       ['triangle-start', 1800],
-      ['cover-start', 6500],
+      ['cover-start', 3600],
       ['examples-start', 5400],
       ['ending-start', 2100],
     ];
