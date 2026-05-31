@@ -280,7 +280,10 @@
       position: relative;
       width: 100%;
       height: 100%;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(4px, 1vw, 12px);
       font-family: var(--marker);
       color: rgba(255, 255, 255, 0.84);
       font-size: clamp(21px, 5vw, 56px);
@@ -290,92 +293,89 @@
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), 0 0 14px rgba(56, 201, 138, 0.12);
       white-space: nowrap;
       filter: saturate(1.02);
-      transition: font-size 1.35s cubic-bezier(.2,.9,.18,1), color 0.55s ease;
     }
 
-    .formula > span,
-    .factor-group > span {
-      position: absolute;
-      z-index: 2;
+    .formula span {
       display: inline-block;
-      opacity: 1;
-      transform: translate(-50%, -50%) scale(1);
       transition:
         opacity 1.35s ease,
         transform 1.35s cubic-bezier(.2,.9,.18,1),
         left 1.35s cubic-bezier(.2,.9,.18,1),
         top 1.35s cubic-bezier(.2,.9,.18,1),
+        width 1.35s cubic-bezier(.2,.9,.18,1),
+        height 1.35s cubic-bezier(.2,.9,.18,1),
         font-size 1.35s cubic-bezier(.2,.9,.18,1),
         color 0.55s ease;
     }
-
-    .factor-group {
-      display: contents;
-    }
-
-    .p-symbol { left: 10.5%; top: 50%; }
-    .equals { left: 20.5%; top: 50%; }
-    .root { left: 34%; top: 50%; }
-    .vl { left: 53%; top: 50%; }
-    .il { left: 70.5%; top: 50%; }
-    .cos { left: 89%; top: 50%; }
-    .factor-group .mult:nth-child(2) { left: 43.5%; top: 50%; }
-    .factor-group .mult:nth-child(4) { left: 61.8%; top: 50%; }
-    .factor-group .mult:nth-child(6) { left: 79.8%; top: 50%; }
 
     .stage.formula-start .p-symbol {
       animation: popSpotlight 0.82s ease 1.05s 1;
     }
 
-    .stage.formula-start .right-side > span {
+    .stage.formula-start .right-side {
       animation: popSpotlight 0.82s ease 2.28s 1;
     }
 
+    .factor-group {
+      display: inline-flex !important;
+      align-items: baseline;
+      gap: clamp(4px, 1vw, 12px);
+      transition:
+        opacity 1.35s ease,
+        transform 1.35s cubic-bezier(.2,.9,.18,1),
+        left 1.35s cubic-bezier(.2,.9,.18,1),
+        top 1.35s cubic-bezier(.2,.9,.18,1),
+        width 1.35s cubic-bezier(.2,.9,.18,1),
+        height 1.35s cubic-bezier(.2,.9,.18,1),
+        font-size 1.35s cubic-bezier(.2,.9,.18,1);
+    }
+
     .stage.triangle-start .formula {
+      display: block;
       font-size: clamp(20px, 4.7vw, 50px);
       color: rgba(255, 255, 255, 0.88);
     }
 
+    .stage.triangle-start .formula span,
+    .stage.triangle-start .factor-group {
+      position: absolute;
+    }
+
     .stage.triangle-start .p-symbol {
       left: 50%;
-      top: 31.8%;
+      top: 33%;
       transform: translate(-50%, -50%) scale(1.38);
       color: var(--green);
     }
 
     .stage.triangle-start .equals {
-      left: 27%;
-      top: 45%;
       opacity: 0;
-      transform: translate(-50%, -50%) scale(0.7);
-      transition-duration: 1.7s;
+      transform: translate(-50%, -40px) scale(0.7);
     }
 
-    .stage.triangle-start .root,
-    .stage.triangle-start .vl,
-    .stage.triangle-start .il,
-    .stage.triangle-start .cos {
-      top: 73%;
+    .stage.triangle-start .factor-group {
+      left: 50%;
+      top: 72%;
+      width: 62%;
+      transform: translate(-50%, -50%);
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      justify-items: center;
+      gap: 0;
       color: var(--soft-white);
-      transform: translate(-50%, -50%) scale(0.98);
     }
 
-    .stage.triangle-start .root { left: 24.5%; }
-    .stage.triangle-start .vl { left: 39.7%; }
-    .stage.triangle-start .il { left: 55.2%; }
-    .stage.triangle-start .cos { left: 75%; }
+    .formula > span,
+    .factor-group {
+      z-index: 2;
+    }
+
+    .stage.triangle-start .factor-group > span { position: static !important; }
 
     .stage.triangle-start .mult {
-      top: 73%;
-      opacity: 0;
-      color: rgba(56, 201, 138, 0.92);
-      transform: translate(-50%, -50%) scaleY(1.55) scaleX(0.46);
-      transition-duration: 1.7s;
+      display: none !important;
     }
-
-    .stage.triangle-start .factor-group .mult:nth-child(2) { left: 35.1%; }
-    .stage.triangle-start .factor-group .mult:nth-child(4) { left: 50%; }
-    .stage.triangle-start .factor-group .mult:nth-child(6) { left: 64.9%; }
 
     .triangle-outline {
       position: absolute;
@@ -393,17 +393,16 @@
       stroke-linecap: round;
       stroke-dasharray: 1000;
       stroke-dashoffset: 1000;
-      opacity: 0;
       filter: drop-shadow(0 0 8px rgba(56, 201, 138, 0.25));
     }
 
     .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 0.85s forwards; }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.3s; }
-    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.45s; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.05s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.6s; }
+    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.85s; }
     .stage.triangle-start .tri-line:nth-child(5),
     .stage.triangle-start .tri-line:nth-child(6),
-    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 1.2s; animation-duration: 0.95s; }
+    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 2.05s; }
 
     .cover-block {
       position: absolute;
@@ -759,11 +758,11 @@
     }
 
     @keyframes popSpotlight {
-      0%, 100% { color: var(--white); transform: translate(-50%, -50%) translateY(0) scale(1); }
-      44%, 66% { color: var(--green); transform: translate(-50%, -50%) translateY(-3px) scale(1.04); text-shadow: var(--shadow); }
+      0%, 100% { color: var(--white); transform: translateY(0) scale(1); }
+      44%, 66% { color: var(--green); transform: translateY(-3px) scale(1.04); text-shadow: var(--shadow); }
     }
 
-    @keyframes drawLine { to { stroke-dashoffset: 0; opacity: 1; } }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
     @keyframes triangleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
