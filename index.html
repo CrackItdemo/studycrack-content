@@ -235,7 +235,7 @@
       position: absolute;
       top: 60%;
       left: 50%;
-      width: min(94%, 760px);
+      width: min(94%, 795px);
       height: clamp(78px, 12.5vh, 146px);
       translate: -50% 0;
       padding: clamp(16px, 4.2vw, 38px) clamp(8px, 2.6vw, 24px);
@@ -283,10 +283,10 @@
       display: block;
       font-family: var(--marker);
       color: rgba(255, 255, 255, 0.84);
-      font-size: clamp(21px, 5vw, 56px);
+      font-size: clamp(20px, 4.75vw, 54px);
       font-weight: 860;
       line-height: 1.12;
-      letter-spacing: -0.038em;
+      letter-spacing: -0.044em;
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2), 0 0 14px rgba(56, 201, 138, 0.12);
       white-space: nowrap;
       filter: saturate(1.02);
@@ -313,15 +313,15 @@
       display: contents;
     }
 
-    .p-symbol { left: 10.5%; top: 50%; }
-    .equals { left: 20.5%; top: 50%; }
-    .root { left: 34%; top: 50%; }
-    .vl { left: 53%; top: 50%; }
-    .il { left: 70.5%; top: 50%; }
-    .cos { left: 89%; top: 50%; }
-    .factor-group .mult:nth-child(2) { left: 43.5%; top: 50%; }
-    .factor-group .mult:nth-child(4) { left: 61.8%; top: 50%; }
-    .factor-group .mult:nth-child(6) { left: 79.8%; top: 50%; }
+    .p-symbol { left: 8.2%; top: 50%; }
+    .equals { left: 17.2%; top: 50%; }
+    .root { left: 30.6%; top: 50%; }
+    .vl { left: 49.2%; top: 50%; }
+    .il { left: 67.6%; top: 50%; }
+    .cos { left: 88.2%; top: 50%; }
+    .factor-group .mult:nth-child(2) { left: 40.8%; top: 50%; }
+    .factor-group .mult:nth-child(4) { left: 58.6%; top: 50%; }
+    .factor-group .mult:nth-child(6) { left: 76.6%; top: 50%; }
 
     .stage.formula-start .p-symbol {
       animation: popSpotlight 0.82s ease 1.05s 1;
@@ -349,6 +349,7 @@
       opacity: 0;
       transform: translate(-50%, -50%) scale(0.7);
       transition-duration: 1.7s;
+      transition-delay: 0.48s, 0s, 0s, 0s, 0s, 0s;
     }
 
     .stage.triangle-start .root,
@@ -358,6 +359,7 @@
       top: 73%;
       color: var(--soft-white);
       transform: translate(-50%, -50%) scale(0.98);
+      transition-delay: 0.12s;
     }
 
     .stage.triangle-start .root { left: 24.5%; }
@@ -371,6 +373,7 @@
       color: rgba(56, 201, 138, 0.92);
       transform: translate(-50%, -50%) scaleY(1.55) scaleX(0.46);
       transition-duration: 1.7s;
+      transition-delay: 0.62s, 0s, 0.12s, 0.12s, 0s, 0s;
     }
 
     .stage.triangle-start .factor-group .mult:nth-child(2) { left: 35.1%; }
@@ -397,13 +400,13 @@
       filter: drop-shadow(0 0 8px rgba(56, 201, 138, 0.25));
     }
 
-    .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 0.85s forwards; }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.3s; }
-    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.45s; }
+    .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 1.45s forwards; }
+    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.6s; }
+    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.9s; }
+    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 2.05s; }
     .stage.triangle-start .tri-line:nth-child(5),
     .stage.triangle-start .tri-line:nth-child(6),
-    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 1.2s; animation-duration: 0.95s; }
+    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 1.8s; animation-duration: 0.95s; }
 
     .cover-block {
       position: absolute;
