@@ -228,7 +228,7 @@
     }
 
     .stage.triangle-start .triangle-helper {
-      animation: helperIn 0.52s ease forwards, helperOut 0.42s ease 3.35s forwards;
+      animation: helperIn 0.38s ease forwards, helperOut 0.42s ease 0.88s forwards;
     }
 
     .formula-box {
@@ -331,50 +331,41 @@
     }
 
     .stage.triangle-start .formula {
-      display: block;
       font-size: clamp(20px, 4.7vw, 50px);
       color: rgba(255, 255, 255, 0.88);
     }
 
-    .stage.triangle-start .formula span,
-    .stage.triangle-start .factor-group {
+    .formula.is-morphing {
+      display: block;
+    }
+
+    .formula.is-morphing .factor-group {
+      display: contents !important;
+    }
+
+    .formula.is-morphing span {
       position: absolute;
+      z-index: 2;
+      margin: 0;
+      will-change: left, top, opacity, transform;
     }
 
-    .stage.triangle-start .p-symbol {
-      left: 50%;
-      top: 33%;
-      transform: translate(-50%, -50%) scale(1.38);
-      color: var(--green);
-    }
-
-    .stage.triangle-start .equals {
-      opacity: 0;
-      transform: translate(-50%, -40px) scale(0.7);
-    }
-
-    .stage.triangle-start .factor-group {
-      left: 50%;
-      top: 72%;
-      width: 62%;
-      transform: translate(-50%, -50%);
-      display: grid !important;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      align-items: center;
-      justify-items: center;
-      gap: 0;
+    .formula.is-morphing .factor {
       color: var(--soft-white);
+    }
+
+    .formula.is-morphing .p-symbol {
+      color: var(--green);
+      text-shadow: var(--shadow);
+    }
+
+    .formula.is-morphing .equals {
+      transform-origin: center;
     }
 
     .formula > span,
     .factor-group {
       z-index: 2;
-    }
-
-    .stage.triangle-start .factor-group > span { position: static !important; }
-
-    .stage.triangle-start .mult {
-      display: none !important;
     }
 
     .triangle-outline {
@@ -391,18 +382,26 @@
       stroke: var(--line);
       stroke-width: 8;
       stroke-linecap: round;
-      stroke-dasharray: 1000;
-      stroke-dashoffset: 1000;
       filter: drop-shadow(0 0 8px rgba(56, 201, 138, 0.25));
+      opacity: 0;
     }
 
-    .stage.triangle-start .tri-line { animation: drawLine 1.25s cubic-bezier(.3,.75,.15,1) 0.85s forwards; }
-    .stage.triangle-start .tri-line:nth-child(2) { animation-delay: 1.05s; }
-    .stage.triangle-start .tri-line:nth-child(3) { animation-delay: 1.6s; }
-    .stage.triangle-start .tri-line:nth-child(4) { animation-delay: 1.85s; }
-    .stage.triangle-start .tri-line:nth-child(5),
-    .stage.triangle-start .tri-line:nth-child(6),
-    .stage.triangle-start .tri-line:nth-child(7) { animation-delay: 2.05s; }
+    .triangle-outer {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+    }
+
+    .triangle-divider {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+      transition: opacity 0.42s ease;
+    }
+
+    .stage.dividers-visible .triangle-divider { opacity: 1; }
+    .stage.triangle-draw .triangle-outer { opacity: 1; animation: drawLine 1.05s cubic-bezier(.3,.75,.15,1) forwards; }
+    .stage.triangle-draw .triangle-outer:nth-child(2) { animation-delay: 0.14s; }
+    .stage.triangle-draw .triangle-outer:nth-child(3) { animation-delay: 0.28s; }
+    .stage.triangle-draw .triangle-outer:nth-child(4) { animation-delay: 0.42s; }
 
     .cover-block {
       position: absolute;
@@ -892,13 +891,13 @@
               <span class="factor cos">cosθ</span>
             </span>
             <svg class="triangle-outline" viewBox="0 0 820 520" aria-hidden="true">
-              <line class="tri-line" x1="410" y1="74" x2="72" y2="486" />
-              <line class="tri-line" x1="410" y1="74" x2="748" y2="486" />
-              <line class="tri-line" x1="256" y1="262" x2="564" y2="262" />
-              <line class="tri-line" x1="72" y1="486" x2="748" y2="486" />
-              <line class="tri-line" x1="288" y1="262" x2="288" y2="486" />
-              <line class="tri-line" x1="410" y1="262" x2="410" y2="486" />
-              <line class="tri-line" x1="532" y1="262" x2="532" y2="486" />
+              <line class="tri-line triangle-outer" x1="410" y1="74" x2="72" y2="486" />
+              <line class="tri-line triangle-outer" x1="410" y1="74" x2="748" y2="486" />
+              <line class="tri-line triangle-outer" x1="256" y1="262" x2="564" y2="262" />
+              <line class="tri-line triangle-outer" x1="72" y1="486" x2="748" y2="486" />
+              <line class="tri-line triangle-divider" x1="288" y1="262" x2="288" y2="486" />
+              <line class="tri-line triangle-divider" x1="410" y1="262" x2="410" y2="486" />
+              <line class="tri-line triangle-divider" x1="532" y1="262" x2="532" y2="486" />
             </svg>
             <div class="cover-block cover-vl" aria-hidden="true"></div>
             <div class="cover-block cover-il" aria-hidden="true"></div>
@@ -971,7 +970,7 @@
     const controls = document.querySelector('.playback-controls');
     const timelineSteps = [
       ['formula-start', 2200],
-      ['triangle-start', 1800],
+      ['triangle-start', 4300],
       ['cover-start', 3600],
       ['examples-start', 5400],
       ['ending-start', 2100],
@@ -981,7 +980,88 @@
     let stepStartedAt = 0;
     let remainingDelay = timelineSteps[0][1];
     let timelineTimer = null;
+    let morphTimers = [];
     let paused = false;
+
+    const clearMorphTimers = () => {
+      morphTimers.forEach((timer) => clearTimeout(timer));
+      morphTimers = [];
+    };
+
+    const queueMorphStep = (callback, delay) => {
+      const timer = setTimeout(() => {
+        morphTimers = morphTimers.filter((queuedTimer) => queuedTimer !== timer);
+        callback();
+      }, delay);
+      morphTimers.push(timer);
+    };
+
+    const symbolCenterTarget = (symbol, xPercent, yPercent, formulaRect) => ({
+      left: (formulaRect.width * xPercent) - (symbol.offsetWidth / 2),
+      top: (formulaRect.height * yPercent) - (symbol.offsetHeight / 2),
+    });
+
+    const setSymbolTransition = (symbol, duration, delay = 0, properties = 'left, top, opacity, transform, color') => {
+      symbol.style.transition = properties
+        .split(',')
+        .map((property) => `${property.trim()} ${duration}ms cubic-bezier(.2,.9,.18,1) ${delay}ms`)
+        .join(', ');
+    };
+
+    const startFormulaTriangleTransition = () => {
+      stage.classList.add('triangle-start');
+      queueMorphStep(() => {
+        const formula = document.querySelector('#formula');
+        const formulaRect = formula.getBoundingClientRect();
+        const pSymbol = formula.querySelector('.p-symbol');
+        const equals = formula.querySelector('.equals');
+        const factors = Array.from(formula.querySelectorAll('.factor'));
+        const multipliers = Array.from(formula.querySelectorAll('.mult'));
+        const symbols = [pSymbol, equals, ...factors, ...multipliers];
+
+        symbols.forEach((symbol) => {
+          const rect = symbol.getBoundingClientRect();
+          symbol.style.transition = 'none';
+          symbol.style.left = `${rect.left - formulaRect.left}px`;
+          symbol.style.top = `${rect.top - formulaRect.top}px`;
+          symbol.style.width = `${rect.width}px`;
+          symbol.style.height = `${rect.height}px`;
+          symbol.style.opacity = getComputedStyle(symbol).opacity;
+          symbol.style.transform = 'translate(0, 0) scale(1)';
+        });
+
+        formula.classList.add('is-morphing');
+        formula.getBoundingClientRect();
+
+        const pTarget = symbolCenterTarget(pSymbol, 0.5, 0.31, formulaRect);
+        setSymbolTransition(pSymbol, 850, 0);
+        pSymbol.style.left = `${pTarget.left}px`;
+        pSymbol.style.top = `${pTarget.top}px`;
+        pSymbol.style.transform = 'translate(0, 0) scale(1.38)';
+
+        setSymbolTransition(equals, 350, 900, 'opacity, transform');
+        equals.style.opacity = '0';
+        equals.style.transform = 'translateY(-28px) scale(0.72)';
+
+        const factorTargets = [0.24, 0.41, 0.59, 0.76];
+        factors.forEach((factor, index) => {
+          const target = symbolCenterTarget(factor, factorTargets[index], 0.73, formulaRect);
+          setSymbolTransition(factor, 950, 1300);
+          factor.style.left = `${target.left}px`;
+          factor.style.top = `${target.top}px`;
+          factor.style.transform = 'translate(0, 0) scale(1)';
+        });
+
+        multipliers.forEach((multiplier) => {
+          setSymbolTransition(multiplier, 360, 2280, 'opacity, transform');
+          multiplier.style.opacity = '0';
+          multiplier.style.transform = 'translateY(8px) scale(0.72)';
+        });
+
+        queueMorphStep(() => stage.classList.add('dividers-visible'), 2280);
+        queueMorphStep(() => stage.classList.add('triangle-draw'), 2750);
+      }, 1350);
+    };
 
     const setActiveControl = (action) => {
       controls.querySelectorAll('button').forEach((button) => {
@@ -1005,7 +1085,11 @@
       remainingDelay = delay;
       stepStartedAt = performance.now();
       timelineTimer = setTimeout(() => {
-        stage.classList.add(className);
+        if (className === 'triangle-start') {
+          startFormulaTriangleTransition();
+        } else {
+          stage.classList.add(className);
+        }
         currentStep += 1;
         runNextStep();
       }, remainingDelay);
@@ -1038,7 +1122,12 @@
       if (currentStep < timelineSteps.length && !timelineTimer) {
         stepStartedAt = performance.now();
         timelineTimer = setTimeout(() => {
-          stage.classList.add(timelineSteps[currentStep][0]);
+          const [className] = timelineSteps[currentStep];
+          if (className === 'triangle-start') {
+            startFormulaTriangleTransition();
+          } else {
+            stage.classList.add(className);
+          }
           currentStep += 1;
           runNextStep();
         }, remainingDelay);
@@ -1049,14 +1138,17 @@
 
     const restartAnimation = () => {
       clearTimeout(timelineTimer);
+      clearMorphTimers();
       timelineTimer = null;
       paused = false;
       currentStep = 0;
       remainingDelay = timelineSteps[0][1];
 
       getStageAnimations().forEach((animation) => animation.cancel());
+      document.querySelector('#formula').classList.remove('is-morphing');
+      document.querySelectorAll('#formula span').forEach((symbol) => symbol.removeAttribute('style'));
       stage.classList.add('is-resetting');
-      stage.classList.remove('is-paused', ...timelineSteps.map(([className]) => className));
+      stage.classList.remove('is-paused', 'dividers-visible', 'triangle-draw', ...timelineSteps.map(([className]) => className));
       stage.getBoundingClientRect();
 
       requestAnimationFrame(() => {
