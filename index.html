@@ -644,6 +644,69 @@
       animation: progress 19s linear forwards;
     }
 
+    .playback-controls {
+      position: absolute;
+      left: 4.8%;
+      bottom: 3.3%;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: clamp(5px, 1.3vw, 10px);
+      padding: clamp(5px, 1.2vw, 9px);
+      border: 1px solid rgba(66, 199, 140, 0.2);
+      border-radius: 999px;
+      background: rgba(7, 28, 44, 0.54);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.16), inset 0 0 18px rgba(66, 199, 140, 0.045);
+      backdrop-filter: blur(12px);
+    }
+
+    .playback-controls button {
+      appearance: none;
+      min-width: clamp(34px, 8.2vw, 70px);
+      padding: clamp(6px, 1.45vw, 11px) clamp(8px, 2vw, 16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.045);
+      color: rgba(255, 255, 255, 0.68);
+      font: inherit;
+      font-size: clamp(9px, 1.95vw, 18px);
+      font-weight: 850;
+      line-height: 1;
+      letter-spacing: -0.025em;
+      cursor: pointer;
+      transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+
+    .playback-controls button:hover,
+    .playback-controls button:focus-visible {
+      color: var(--white);
+      border-color: rgba(66, 199, 140, 0.42);
+      background: rgba(66, 199, 140, 0.12);
+      box-shadow: 0 0 18px rgba(66, 199, 140, 0.15);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .playback-controls button[aria-pressed="true"] {
+      color: var(--green);
+      border-color: rgba(66, 199, 140, 0.5);
+      background: rgba(66, 199, 140, 0.14);
+      text-shadow: 0 0 12px rgba(66, 199, 140, 0.32);
+    }
+
+    .stage.is-paused .workspace *,
+    .stage.is-paused .watermark,
+    .stage.is-paused .progress span {
+      animation-play-state: paused !important;
+    }
+
+    .stage.is-resetting .workspace *,
+    .stage.is-resetting .watermark,
+    .stage.is-resetting .progress span {
+      animation: none !important;
+      transition: none !important;
+    }
+
     @keyframes titleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
 
     @keyframes titleLift { to { opacity: 0; transform: translateY(-20px) scale(0.94); filter: blur(2px); } }
@@ -847,10 +910,16 @@
 
     <div class="watermark" aria-hidden="true"><span class="watermark-c">C</span><span>CrackIt</span></div>
     <div class="progress" aria-hidden="true"><span></span></div>
+    <div class="playback-controls" aria-label="Animation playback controls">
+      <button type="button" data-action="pause">Pause</button>
+      <button type="button" data-action="play">Play</button>
+      <button type="button" data-action="restart">Restart</button>
+    </div>
   </main>
 
   <script>
     const stage = document.querySelector('.stage');
+    const controls = document.querySelector('.playback-controls');
     const timelineSteps = [
       ['formula-start', 2200],
       ['triangle-start', 1800],
@@ -859,12 +928,107 @@
       ['ending-start', 2100],
     ];
 
-    let elapsed = 0;
+    let currentStep = 0;
+    let stepStartedAt = 0;
+    let remainingDelay = timelineSteps[0][1];
+    let timelineTimer = null;
+    let paused = false;
 
-    timelineSteps.forEach(([className, delay]) => {
-      elapsed += delay;
-      setTimeout(() => stage.classList.add(className), elapsed);
+    const setActiveControl = (action) => {
+      controls.querySelectorAll('button').forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.action === action));
+      });
+    };
+
+    const getStageAnimations = () =>
+      stage.getAnimations({ subtree: true }).filter((animation) => {
+        const target = animation.effect && animation.effect.target;
+        return !target || !target.closest('.playback-controls');
+      });
+
+    const runNextStep = () => {
+      if (currentStep >= timelineSteps.length) {
+        timelineTimer = null;
+        return;
+      }
+
+      const [className, delay] = timelineSteps[currentStep];
+      remainingDelay = delay;
+      stepStartedAt = performance.now();
+      timelineTimer = setTimeout(() => {
+        stage.classList.add(className);
+        currentStep += 1;
+        runNextStep();
+      }, remainingDelay);
+    };
+
+    const pauseAnimation = () => {
+      if (paused) return;
+
+      paused = true;
+      stage.classList.add('is-paused');
+
+      if (timelineTimer) {
+        clearTimeout(timelineTimer);
+        timelineTimer = null;
+        remainingDelay = Math.max(0, remainingDelay - (performance.now() - stepStartedAt));
+      }
+
+      getStageAnimations().forEach((animation) => animation.pause());
+      setActiveControl('pause');
+    };
+
+    const playAnimation = () => {
+      if (!paused) return;
+
+      paused = false;
+      stage.classList.remove('is-paused');
+
+      getStageAnimations().forEach((animation) => animation.play());
+
+      if (currentStep < timelineSteps.length && !timelineTimer) {
+        stepStartedAt = performance.now();
+        timelineTimer = setTimeout(() => {
+          stage.classList.add(timelineSteps[currentStep][0]);
+          currentStep += 1;
+          runNextStep();
+        }, remainingDelay);
+      }
+
+      setActiveControl('play');
+    };
+
+    const restartAnimation = () => {
+      clearTimeout(timelineTimer);
+      timelineTimer = null;
+      paused = false;
+      currentStep = 0;
+      remainingDelay = timelineSteps[0][1];
+
+      getStageAnimations().forEach((animation) => animation.cancel());
+      stage.classList.add('is-resetting');
+      stage.classList.remove('is-paused', ...timelineSteps.map(([className]) => className));
+      stage.getBoundingClientRect();
+
+      requestAnimationFrame(() => {
+        stage.classList.remove('is-resetting');
+        getStageAnimations().forEach((animation) => animation.play());
+        runNextStep();
+        setActiveControl('play');
+      });
+    };
+
+    controls.addEventListener('click', (event) => {
+      const button = event.target.closest('button[data-action]');
+      if (!button) return;
+
+      if (button.dataset.action === 'pause') pauseAnimation();
+      if (button.dataset.action === 'play') playAnimation();
+      if (button.dataset.action === 'restart') restartAnimation();
     });
+
+    setActiveControl('play');
+    runNextStep();
   </script>
 </body>
 </html>
