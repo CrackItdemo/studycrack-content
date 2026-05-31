@@ -77,54 +77,78 @@
       position: absolute;
       inset: 0;
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: clamp(8px, 2vh, 24px);
-      padding: clamp(18px, 5.4vw, 58px) clamp(16px, 5.2vw, 56px) clamp(28px, 7vw, 70px);
+      padding: clamp(14px, 4.4vw, 48px) clamp(14px, 4.8vw, 52px) clamp(28px, 7vw, 70px);
     }
 
-    .hook {
-      position: relative;
+    .opening-copy {
+      position: absolute;
+      top: clamp(20px, 5.6vw, 60px);
+      left: 50%;
       z-index: 8;
+      width: min(91%, 760px);
+      translate: -50% 0;
       display: grid;
-      gap: clamp(7px, 1.3vh, 16px);
-      align-content: start;
-      min-height: 23%;
-      padding: clamp(10px, 2.4vw, 24px) clamp(10px, 2.8vw, 26px);
-      border: 1px solid rgba(66, 199, 140, 0.18);
-      border-radius: clamp(18px, 4vw, 34px);
-      background: linear-gradient(180deg, rgba(7, 28, 44, 0.74), rgba(7, 28, 44, 0.34));
-      box-shadow: 0 18px 44px rgba(0,0,0,0.18), inset 0 0 28px rgba(66,199,140,0.045);
-      backdrop-filter: blur(5px);
+      justify-items: center;
+      gap: clamp(6px, 1.45vh, 16px);
+      text-align: center;
+      pointer-events: none;
     }
 
-    .kicker {
-      color: var(--green);
-      font-size: clamp(11px, 2.25vw, 22px);
-      font-weight: 950;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      text-shadow: 0 0 15px rgba(66, 199, 140, 0.5);
-      opacity: 0;
-      transform: translateY(-8px);
-      animation: fadeWrite 0.55s ease forwards;
-    }
-
-    .hook-line {
+    .opening-title {
       margin: 0;
-      font-size: clamp(21px, 5.5vw, 54px);
-      font-weight: 950;
-      line-height: 1.04;
-      letter-spacing: -0.05em;
+      color: var(--white);
+      font-size: clamp(42px, 12.5vw, 126px);
+      font-weight: 1000;
+      line-height: 0.86;
+      letter-spacing: -0.08em;
+      text-transform: uppercase;
       text-wrap: balance;
-      text-shadow: 0 0 20px rgba(66, 199, 140, 0.2);
+      text-shadow:
+        0 0 14px rgba(66, 199, 140, 0.64),
+        0 0 40px rgba(66, 199, 140, 0.28),
+        0 8px 28px rgba(0, 0, 0, 0.34);
       opacity: 0;
-      transform: translateX(-18px) rotate(-0.5deg);
-      animation: fadeWrite 0.72s cubic-bezier(.2,.9,.2,1) forwards;
+      transform: translateY(-10px) scale(0.96);
+      animation: titleIn 0.68s cubic-bezier(.2,.9,.2,1) 0.05s forwards;
     }
 
-    .hook-line:nth-of-type(2) { animation-delay: 0.35s; }
-    .hook-line:nth-of-type(3) { animation-delay: 1.35s; }
-    .hook-line:nth-of-type(4) { animation-delay: 2.45s; }
+    .opening-subtitle {
+      margin: 0;
+      max-width: 13ch;
+      color: rgba(255,255,255,0.93);
+      font-size: clamp(25px, 6.2vw, 62px);
+      font-weight: 950;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      text-wrap: balance;
+      text-shadow: 0 0 18px rgba(66, 199, 140, 0.24);
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+      animation: simpleIn 0.58s ease 0.42s forwards;
+    }
+
+    .opening-support {
+      margin: clamp(8px, 1.6vh, 18px) 0 0;
+      max-width: 28ch;
+      color: var(--muted);
+      font-size: clamp(12px, 2.75vw, 27px);
+      font-weight: 800;
+      line-height: 1.16;
+      letter-spacing: -0.02em;
+      text-wrap: balance;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: simpleIn 0.58s ease 0.92s forwards;
+    }
+
+    .stage.formula-start .opening-subtitle,
+    .stage.formula-start .opening-support {
+      animation: softOut 0.55s ease forwards;
+    }
+
+    .stage.triangle-start .opening-title {
+      animation: titleLift 0.72s ease forwards;
+    }
 
     .green {
       color: var(--green);
@@ -135,23 +159,33 @@
       position: relative;
       min-height: 0;
       border: 2px solid rgba(66, 199, 140, 0.18);
-      border-radius: clamp(22px, 5vw, 46px);
+      border-radius: clamp(24px, 6vw, 52px);
       background:
-        linear-gradient(180deg, rgba(255,255,255,0.052), rgba(255,255,255,0.026)),
-        rgba(7, 28, 44, 0.38);
+        linear-gradient(180deg, rgba(255,255,255,0.068), rgba(255,255,255,0.028)),
+        rgba(7, 28, 44, 0.42);
       box-shadow: 0 24px 58px rgba(0,0,0,0.18), inset 0 0 44px rgba(66,199,140,0.045);
       overflow: hidden;
+      transform: scale(0.965);
+      transform-origin: center;
+      transition: transform 1.05s cubic-bezier(.2,.9,.18,1), border-color 1.05s ease, box-shadow 1.05s ease;
+    }
+
+    .stage.formula-start .board {
+      transform: scale(1);
+      border-color: rgba(66, 199, 140, 0.28);
+      box-shadow: 0 28px 72px rgba(0,0,0,0.22), inset 0 0 56px rgba(66,199,140,0.07);
     }
 
     .board-note {
       position: absolute;
-      top: clamp(12px, 2.7vw, 28px);
+      top: auto;
+      bottom: clamp(20px, 5vw, 54px);
       left: 50%;
       width: 92%;
       translate: -50% 0;
       text-align: center;
       color: var(--muted);
-      font-size: clamp(13px, 3vw, 29px);
+      font-size: clamp(11px, 2.45vw, 23px);
       font-weight: 800;
       line-height: 1.18;
       opacity: 0;
@@ -159,7 +193,7 @@
     }
 
     .stage.formula-start .board-note {
-      animation: simpleIn 0.55s ease forwards, softOut 0.45s ease 4.8s forwards;
+      animation: simpleIn 0.55s ease 0.15s forwards, softOut 0.45s ease 2.05s forwards;
     }
 
     .triangle-helper {
@@ -187,10 +221,10 @@
 
     .formula-box {
       position: absolute;
-      top: 48%;
+      top: 43%;
       left: 50%;
-      width: 94%;
-      height: clamp(76px, 13vh, 150px);
+      width: min(94%, 760px);
+      height: clamp(78px, 12.5vh, 146px);
       translate: -50% 0;
       padding: clamp(16px, 4.2vw, 38px) clamp(8px, 2.6vw, 24px);
       border: 2px solid rgba(66, 199, 140, 0.28);
@@ -198,8 +232,8 @@
       background: rgba(255, 255, 255, 0.038);
       box-shadow: 0 0 36px rgba(66, 199, 140, 0.1), inset 0 0 28px rgba(66, 199, 140, 0.055);
       text-align: center;
-      opacity: 0;
-      transform: translateY(18px) scale(0.98);
+      opacity: 1;
+      transform: translateY(0) scale(1);
       transition:
         top 1.35s cubic-bezier(.2,.9,.18,1),
         width 1.35s cubic-bezier(.2,.9,.18,1),
@@ -211,11 +245,13 @@
     }
 
     .stage.formula-start .formula-box {
-      animation: formulaBoxIn 0.72s ease 0.2s forwards;
+      top: 38%;
+      width: min(94%, 795px);
+      box-shadow: 0 0 44px rgba(66, 199, 140, 0.15), inset 0 0 34px rgba(66, 199, 140, 0.07);
     }
 
     .stage.triangle-start .formula-box {
-      top: 16%;
+      top: 18%;
       width: min(94%, 735px);
       height: min(44vw, 360px);
       max-height: 37%;
@@ -235,7 +271,7 @@
       justify-content: center;
       gap: clamp(4px, 1vw, 12px);
       font-family: var(--marker);
-      font-size: clamp(21px, 5vw, 56px);
+      font-size: clamp(22px, 5.35vw, 60px);
       font-weight: 950;
       line-height: 1.12;
       letter-spacing: -0.045em;
@@ -608,6 +644,10 @@
       animation: progress 19s linear forwards;
     }
 
+    @keyframes titleIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+
+    @keyframes titleLift { to { opacity: 0; transform: translateY(-20px) scale(0.94); filter: blur(2px); } }
+
     @keyframes fadeWrite {
       0% { opacity: 0; transform: translateX(-18px) rotate(-0.5deg); filter: blur(6px); }
       100% { opacity: 1; transform: translateX(0) rotate(0); filter: blur(0); }
@@ -706,11 +746,14 @@
     @keyframes progress { to { width: 100%; } }
 
     @media (max-height: 720px) {
-      .workspace { padding-top: 14px; gap: 7px; }
-      .hook { min-height: 21%; padding-block: 8px; }
-      .board-note { top: 8px; }
+      .workspace { padding-top: 12px; }
+      .opening-copy { top: 18px; gap: 5px; }
+      .opening-title { font-size: clamp(38px, 11vw, 84px); }
+      .opening-subtitle { font-size: clamp(22px, 5.6vw, 44px); }
+      .opening-support { font-size: clamp(11px, 2.45vw, 20px); margin-top: 4px; }
+      .board-note { bottom: 14px; }
       .triangle-helper { top: 28px; }
-      .formula-box { top: 49%; }
+      .formula-box { top: 43%; }
       .stage.triangle-start .formula-box { top: 14%; min-height: 220px; height: 34%; }
       .reveal-formula { top: 68%; }
       .flash-card { min-height: 82px; }
@@ -729,14 +772,12 @@
 <body>
   <main class="stage" aria-label="CrackIt formula triangle educational animation">
     <div class="workspace">
-      <header class="hook" aria-label="Formula triangle hook text">
-        <span class="kicker">Formula triangles</span>
-        <p class="hook-line">Most apprentices don’t realise <span class="green">this…</span></p>
-        <p class="hook-line">If <span class="green">ONE symbol</span> equals everything else multiplied together…</p>
-        <p class="hook-line">you can turn it into a <span class="green">triangle.</span></p>
-      </header>
-
       <section class="board" aria-label="One-screen animated whiteboard explanation">
+        <div class="opening-copy" aria-label="Formula triangle hook text">
+          <h1 class="opening-title">Formula Triangles</h1>
+          <p class="opening-subtitle">Most apprentices don’t know this.</p>
+          <p class="opening-support">If one symbol equals everything else multiplied together, it can become a practical revision triangle.</p>
+        </div>
         <div class="board-note">Watch the formula rearrange on the same whiteboard.</div>
         <div class="triangle-helper">What’s on the left goes on top.</div>
 
@@ -811,8 +852,8 @@
   <script>
     const stage = document.querySelector('.stage');
     const timelineSteps = [
-      ['formula-start', 3900],
-      ['triangle-start', 4500],
+      ['formula-start', 2200],
+      ['triangle-start', 1800],
       ['cover-start', 3600],
       ['examples-start', 5400],
       ['ending-start', 2100],
