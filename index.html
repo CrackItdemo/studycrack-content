@@ -585,7 +585,7 @@
       z-index: 20;
       width: clamp(54px, 12vw, 126px);
       aspect-ratio: 1;
-      opacity: 0.82;
+      opacity: 0.9;
       filter: drop-shadow(0 0 12px rgba(56, 201, 138, 0.18));
       pointer-events: none;
     }
@@ -597,8 +597,13 @@
       color: var(--green);
     }
 
+    .cracked-c-logo .logo-tile,
     .cracked-c-logo .logo-break {
       fill: var(--navy);
+    }
+
+    .cracked-c-logo .logo-mark {
+      fill: var(--green);
     }
 
     .progress {
@@ -889,11 +894,19 @@
     </div>
 
     <div class="watermark" aria-hidden="true">
-      <svg class="cracked-c-logo" viewBox="0 0 1024 1024" role="img" focusable="false">
-        <path fill="currentColor" fill-rule="evenodd" d="M512 144c139 0 263 77 327 190l-134 77c-37-67-109-112-193-112-124 0-224 95-224 213s100 213 224 213c85 0 159-47 195-116l135 75c-63 117-188 196-330 196-206 0-373-165-373-368s167-368 373-368Zm0 158c-115 0-208 93-208 210s93 210 208 210c79 0 148-44 183-109l-77-43c-20 38-60 64-106 64-67 0-121-55-121-122s54-122 121-122c45 0 84 25 105 62l77-44c-36-63-104-106-182-106Z"/>
-        <path class="logo-break" d="M674 302l90-52-7 86 116-22-167 114-11 87-58-102-76 18 72-62-36-90 60 54 17-31Z"/>
-        <path class="logo-break" d="M285 672l72 34-28 92 114-75 81 31-98 68-88-36-57 82-10-111-93-57 78 18 29-46Z"/>
-        <path class="logo-break" d="M593 473l73-2-65 22 28 56-55-51-63 13 52-31-19-42 49 35Z"/>
+      <svg class="cracked-c-logo" viewBox="0 0 1536 1536" role="img" focusable="false" aria-label="Cracked C logo">
+        <rect class="logo-tile" width="1536" height="1536" rx="252" ry="252" />
+        <path class="logo-mark" d="M1067 437A426 426 0 1 0 1170 963L992 868A229 229 0 1 1 989 656Z" />
+        <path class="logo-break" d="M891 426l23 36 10 82-28 52-76-23 58-49-19-95 41 52-9-55Z" />
+        <path class="logo-break" d="M965 424l-4 57 43 2 80-40-139 115-4 56 28 30 74 1-71 9-32-4-31-39 2-80 56-52-2-55Z" />
+        <path class="logo-break" d="M1006 488l38-38 31 47 71 75-31-16-46-50-39 34-24-52Z" />
+        <path class="logo-break" d="M940 594l16 31 63 14-77 13-20-12-17-46h35Z" />
+        <path class="logo-break" d="M860 566l32-6 2 18-37 1-25-14 28 1Z" />
+        <path class="logo-break" d="M921 590l17 1-8 21-9-22Z" />
+        <path class="logo-break" d="M552 881l67 34-28 87 89 43 79-47-78 65-92-37-37 18-44 47-17-69 30-46-43-41-93-45 74 18 51 49 42-76Z" />
+        <path class="logo-break" d="M612 849l15 20-30 23-17-5 32-38Z" />
+        <path class="logo-break" d="M527 1023l-7 100-22-37 29-63Z" />
+        <path class="logo-break" d="M513 956l-78-37 61 52 49 87 39-38-19-74-52 10Z" />
       </svg>
     </div>
     <div class="progress" aria-hidden="true"><span></span></div>
