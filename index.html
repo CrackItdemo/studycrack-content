@@ -528,7 +528,7 @@
     .examples {
       position: absolute;
       left: 50%;
-      bottom: clamp(10px, 2.4vw, 24px);
+      top: 58%;
       width: 92%;
       translate: -50% 0;
       display: grid;
@@ -605,7 +605,10 @@
     }
 
     .mini-bottom.left { left: 35%; }
+    .mini-bottom.center { left: 50%; }
     .mini-bottom.right { left: 65%; }
+    .mini-bottom.third-left { left: 27%; }
+    .mini-bottom.third-right { left: 73%; }
 
     .mini-outline {
       position: absolute;
@@ -911,6 +914,7 @@
       .stage.triangle-start .formula-box { top: 14%; min-height: 220px; height: 34%; }
       .cover-helper { top: 57%; }
       .reveal-formula { top: 68%; }
+      .examples { top: 57%; }
       .flash-card { min-height: 82px; }
     }
 
@@ -984,15 +988,18 @@
           <h2>Can be used on other multiplied formulas</h2>
           <div class="cards">
             <div class="flash-card one">
-              <div class="mini-triangle" aria-label="X L over 2 pi f and L formula triangle">
+              <div class="mini-triangle" aria-label="X L over 2 pi, f, and L formula triangle">
                 <span class="mini-symbol mini-top">X<sub>L</sub></span>
-                <span class="mini-symbol mini-bottom left">2πf</span>
-                <span class="mini-symbol mini-bottom right">L</span>
+                <span class="mini-symbol mini-bottom third-left">2π</span>
+                <span class="mini-symbol mini-bottom center">f</span>
+                <span class="mini-symbol mini-bottom third-right">L</span>
                 <svg class="mini-outline" viewBox="0 0 420 260" aria-hidden="true">
                   <line x1="210" y1="24" x2="34" y2="232" />
                   <line x1="210" y1="24" x2="386" y2="232" />
                   <line x1="108" y1="145" x2="312" y2="145" />
-                  <line x1="210" y1="145" x2="210" y2="232" />
+                  <line x1="34" y1="232" x2="386" y2="232" />
+                  <line x1="151" y1="145" x2="151" y2="232" />
+                  <line x1="269" y1="145" x2="269" y2="232" />
                 </svg>
               </div>
               <p class="mini-formula">X<sub>L</sub> = 2πfL</p>
@@ -1006,6 +1013,7 @@
                   <line x1="210" y1="24" x2="34" y2="232" />
                   <line x1="210" y1="24" x2="386" y2="232" />
                   <line x1="108" y1="145" x2="312" y2="145" />
+                  <line x1="34" y1="232" x2="386" y2="232" />
                   <line x1="210" y1="145" x2="210" y2="232" />
                 </svg>
               </div>
